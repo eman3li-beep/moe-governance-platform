@@ -1,18 +1,121 @@
-# منصة حوكمة المجالس واللجان التنسيقية الدولية
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>منصة حوكمة المجالس واللجان التنسيقية الدولية</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{
+  --primary:#00897b;--primary2:#006d68;--nav:#073b3a;--nav2:#0a4f4d;--bg:#f4f7f9;--card:#fff;
+  --text:#102a37;--muted:#667985;--line:#e3eaee;--ok:#10b981;--blue:#2563eb;--red:#dc2626;--amber:#d97706;--purple:#7c3aed;
+  --shadow:0 14px 34px rgba(16,42,55,.08);--r:18px
+}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:"Segoe UI",Tahoma,Arial,sans-serif;color:var(--text)}
+.app{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+aside{background:linear-gradient(180deg,var(--nav),var(--nav2));color:#fff;padding:20px 16px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.15);margin-bottom:14px}
+.logo{width:58px;height:58px;border-radius:18px;background:#fff;color:var(--primary);display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:16px;line-height:1.55;margin:0}.brand small{opacity:.75}
+nav button{width:100%;border:0;background:transparent;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:11px 12px;border-radius:14px;margin:2px 0;cursor:pointer;font-family:inherit;text-align:right;font-size:14px}
+nav button:hover,nav button.active{background:rgba(255,255,255,.15)}
+.note{margin-top:16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:12px;font-size:12.5px;line-height:1.8}
+main{padding:22px 26px 40px}
+.top{display:flex;justify-content:space-between;gap:18px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 18px;box-shadow:var(--shadow);margin-bottom:20px}
+.top h2{margin:0;font-size:24px}.top p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.profile{display:flex;gap:10px;align-items:center;border-right:1px solid var(--line);padding-right:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:#e6f4f1;color:var(--primary);display:grid;place-items:center;font-weight:900}
+input,select,textarea{border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px 12px;font-family:inherit;outline:none}textarea{min-height:90px}
+.btn{border:0;background:var(--primary);color:#fff;padding:10px 14px;border-radius:12px;font-family:inherit;font-weight:800;cursor:pointer}.btn.secondary{background:#e7f4f2;color:var(--primary2)}.btn.light{background:#f1f5f9;color:#334155}.btn.red{background:#fee2e2;color:#b91c1c}
+.page{display:none}.page.active{display:block}.grid{display:grid;gap:16px}.kpis{grid-template-columns:repeat(6,1fr)}.two{grid-template-columns:1.1fr .9fr}.three{grid-template-columns:repeat(3,1fr)}.four{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}.card h3{margin:0 0 14px;font-size:17px}
+.kpi small{color:var(--muted)}.kpi b{display:block;font-size:30px;margin:8px 0 3px}.trend{color:var(--ok);font-weight:900;font-size:12px}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}th,td{padding:12px 10px;border-bottom:1px solid var(--line);font-size:13.5px;text-align:right}th{background:#f2f7f7;color:#38525d}
+.badge{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}.ok{background:#dcfce7;color:#047857}.run{background:#dbeafe;color:#1d4ed8}.late{background:#fee2e2;color:#b91c1c}.draft{background:#fff7ed;color:#c2410c}.wait{background:#f3e8ff;color:#6d28d9}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.form textarea{grid-column:1/-1}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tile{background:#f8fafb;border:1px solid var(--line);border-radius:16px;padding:14px;min-height:92px}.tile b{font-size:24px;display:block;margin-top:8px}
+.process{counter-reset:s}.step{display:grid;grid-template-columns:46px 1fr;gap:12px;padding:12px;border-bottom:1px solid var(--line)}.step:before{counter-increment:s;content:counter(s);background:#e7f4f2;color:var(--primary);font-weight:900;width:38px;height:38px;border-radius:14px;display:grid;place-items:center}
+.wire{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.wire div{background:#f8fafb;border:1px dashed #b8c7ce;border-radius:14px;padding:12px;text-align:center;font-weight:800}
+canvas{max-height:250px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.34);display:none;align-items:center;justify-content:center;padding:20px;z-index:99}.modal.show{display:flex}.box{background:#fff;border-radius:22px;padding:20px;width:min(760px,100%);box-shadow:0 25px 70px rgba(0,0,0,.2)}.close{float:left;border:0;background:#f1f5f9;border-radius:10px;padding:8px 12px;cursor:pointer}
+@media(max-width:1150px){.app{grid-template-columns:1fr}aside{height:auto;position:relative}.kpis,.two,.three,.four,.tiles,.form,.wire{grid-template-columns:1fr}.top{display:block}.tools{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+ <div class="brand"><div class="logo">MOE</div><div><h1>منصة حوكمة المجالس واللجان التنسيقية الدولية</h1><small>تصور قيادي تفاعلي</small></div></div>
+ <nav id="nav"></nav>
+ <div class="note">نسخة Prototype للعرض على القيادات، تحاكي تجربة منصة مؤسسية قابلة للتطوير على SharePoint / Power Apps / SPFx.</div>
+</aside>
+<main>
+ <section class="top">
+  <div><h2 id="pageTitle">لوحة القيادة التنفيذية</h2><p>متابعة مركزية للمجالس واللجان والمبادرات والقرارات والتوصيات والوثائق</p></div>
+  <div class="tools"><input placeholder="بحث سريع..."><button class="btn secondary" onclick="openModal('مركز التنبيهات','5 محاضر بانتظار الاعتماد، 4 توصيات متأخرة، 3 مبادرات تحتاج تحديد جهة مالكة.')">🔔 التنبيهات</button><div class="profile"><div class="avatar">م</div><div><b>مدير الإدارة</b><br><small style="color:var(--muted)">وكالة التعاون الدولي</small></div></div></div>
+ </section>
 
-نسخة محدثة:
-- استبدال اسم المستخدم الظاهر إلى: مدير الإدارة
-- جاهزة للنشر على GitHub Pages
+ <section id="dashboard" class="page active">
+  <div class="grid kpis">
+   <div class="card kpi"><small>نسبة الإنجاز العامة</small><b>78%</b><span class="trend">+12%</span></div><div class="card kpi"><small>المجالس</small><b>20</b><span>مجلس تنسيقي</span></div><div class="card kpi"><small>اللجان المشتركة</small><b>60</b><span>لجنة</span></div><div class="card kpi"><small>المبادرات</small><b>245</b><span>مبادرة</span></div><div class="card kpi"><small>متأخر</small><b style="color:var(--red)">18</b><span>تحتاج تصعيد</span></div><div class="card kpi"><small>بانتظار اعتماد</small><b>5</b><span>محاضر</span></div>
+  </div><br>
+  <div class="grid three"><div class="card"><h3>حالة المبادرات</h3><canvas id="c1"></canvas></div><div class="card"><h3>إنجاز التوصيات حسب القطاع</h3><canvas id="c2"></canvas></div><div class="card"><h3>ملخص قيادي</h3><table><tr><td>دول نشطة</td><td><b>34</b></td></tr><tr><td>اجتماعات قادمة</td><td><b>9</b></td></tr><tr><td>وثائق مقيدة</td><td><b>42</b></td></tr><tr><td>مخاطر عالية</td><td><b style="color:var(--red)">6</b></td></tr></table></div></div><br>
+  <div class="grid two"><div class="card"><h3>أحدث الأعمال</h3><table id="latest"></table></div><div class="card"><h3>رحلة العمل</h3><div class="wire"><div>الدولة</div><div>اللجنة</div><div>الاجتماع</div><div>القرار</div><div>الأثر</div></div></div></div>
+ </section>
 
-## طريقة التحديث على GitHub
-
-1. افتحي مستودع GitHub:
-   moe-governance-platform
-2. افتحي ملف:
-   index.html
-3. اضغطي علامة القلم Edit.
-4. احذفي المحتوى القديم.
-5. الصقي محتوى ملف index.html المحدث.
-6. اضغطي Commit changes.
-7. انتظري دقيقة ثم افتحي الرابط:
-   https://eman3li-beep.github.io/moe-governance-platform/
+ <section id="login" class="page"><div class="grid two"><div class="card"><h3>شاشة تسجيل الدخول</h3><div class="form"><input value="مدير الإدارة"><input value="حساب الوزارة"><select><option>دخول آمن عبر Microsoft 365</option></select><button class="btn">تسجيل الدخول</button></div></div><div class="card"><h3>التحكم المؤسسي</h3><p>دخول موحد، صلاحيات حسب الدور، سجل تدقيق، وربط مستقبلي مع SharePoint وTeams وOutlook.</p></div></div></section>
+ <section id="countries" class="page"><div class="card"><h3>الدول</h3><div class="toolbar"><input placeholder="بحث بالدولة"><select><option>كل المناطق</option><option>آسيا</option><option>أوروبا</option></select><button class="btn">+ إضافة دولة</button></div><table id="countriesT"></table></div></section>
+ <section id="countryFile" class="page"><div class="grid two"><div class="card"><h3>الملف الموحد للدولة: الصين</h3><div class="tiles"><div class="tile">مجالس/لجان<b>4</b></div><div class="tile">مبادرات<b>27</b></div><div class="tile">اتفاقيات<b>6</b></div><div class="tile">إنجاز<b>81%</b></div></div></div><div class="card"><h3>ملخص تنفيذي</h3><p>يعرض جميع الأعمال المرتبطة بالدولة: اجتماعات، اتفاقيات، محاضر، توصيات، مبادرات، مخاطر، وفرص تعاون.</p></div></div><br><div class="card"><table id="countryWork"></table></div></section>
+ <section id="councils" class="page"><div class="card"><h3>سجل المجالس واللجان</h3><div class="toolbar"><input placeholder="بحث"><select><option>مجلس/لجنة</option></select><button class="btn">+ إنشاء مجلس/لجنة</button></div><table id="councilsT"></table></div></section>
+ <section id="councilProfile" class="page"><div class="grid two"><div class="card"><h3>بطاقة المجلس/اللجنة</h3><div class="form"><input value="المجلس السعودي الصيني للتعليم"><input value="الصين"><input value="نشط"><textarea>الأساس النظامي، أمانة اللجنة، ضابط الاتصال، الجهات المشاركة، دورية الانعقاد، مخرجات آخر اجتماع.</textarea></div></div><div class="card"><h3>مؤشرات المجلس</h3><canvas id="c3"></canvas></div></div></section>
+ <section id="initiatives" class="page"><div class="card"><h3>المبادرات والمقترحات</h3><div class="toolbar"><button class="btn">+ مبادرة جديدة</button><button class="btn secondary">استيراد Excel</button><select><option>كل الحالات</option></select></div><table id="initiativesT"></table></div></section>
+ <section id="initiativeForm" class="page"><div class="card"><h3>نموذج مبادرة</h3><div class="form"><input placeholder="اسم المبادرة"><select><option>الدولة</option></select><select><option>الجهة المالكة</option></select><input placeholder="تاريخ البدء"><input placeholder="تاريخ الانتهاء"><input placeholder="مؤشر الأداء"><textarea placeholder="الوصف، نطاق العمل، المخاطر، المتطلبات، الأثر المتوقع"></textarea><button class="btn">حفظ وإرسال للمراجعة</button></div></div></section>
+ <section id="meetings" class="page"><div class="card"><h3>إدارة الاجتماعات</h3><table id="meetingsT"></table></div></section>
+ <section id="agenda" class="page"><div class="card"><h3>جدول الأعمال</h3><div class="form"><input value="اجتماع اللجنة السعودية التركية"><input value="2026/07/15"><select><option>اجتماع فني</option><option>اجتماع تحضيري</option><option>اجتماع وزاري</option></select><textarea>1. مراجعة المبادرات السابقة&#10;2. مناقشة فرص التعاون&#10;3. اعتماد التوصيات</textarea><button class="btn">تعميم جدول الأعمال</button></div></div></section>
+ <section id="attendance" class="page"><div class="card"><h3>الحضور والتمثيل</h3><table id="attendanceT"></table></div></section>
+ <section id="minutes" class="page"><div class="card"><h3>المحاضر</h3><div class="toolbar"><button class="btn">+ إنشاء محضر</button><button class="btn secondary">مسار الاعتماد</button></div><table id="minutesT"></table></div></section>
+ <section id="decisions" class="page"><div class="card"><h3>القرارات</h3><table id="decisionsT"></table></div></section>
+ <section id="recommendations" class="page"><div class="card"><h3>التوصيات والمتابعة</h3><table id="recommendationsT"></table></div></section>
+ <section id="tasks" class="page"><div class="card"><h3>المهام التنفيذية</h3><table id="tasksT"></table></div></section>
+ <section id="approvals" class="page"><div class="card"><h3>مسارات الاعتماد</h3><div class="process"><div class="step"><b>إعداد</b><span>ضابط الاتصال/الفريق المختص</span></div><div class="step"><b>مراجعة فنية</b><span>الجهة المالكة</span></div><div class="step"><b>مراجعة نظامية</b><span>الشؤون القانونية عند وجود التزام جوهري</span></div><div class="step"><b>اعتماد</b><span>صاحب الصلاحية</span></div><div class="step"><b>تعميم</b><span>إشعار الجهات المعنية</span></div></div></div></section>
+ <section id="documents" class="page"><div class="card"><h3>مستودع الوثائق</h3><div class="toolbar"><input type="file"><select><option>محضر</option><option>اتفاقية</option><option>تقرير</option></select><button class="btn">رفع وتصنيف</button></div><table id="docsT"></table></div></section>
+ <section id="agreements" class="page"><div class="card"><h3>الاتفاقيات ومذكرات التفاهم</h3><table id="agreementsT"></table></div></section>
+ <section id="reports" class="page"><div class="grid two"><div class="card"><h3>لوحة التقارير</h3><canvas id="c4"></canvas></div><div class="card"><h3>إعداد تقرير قيادي</h3><div class="form"><select><option>شهري</option><option>ربع سنوي</option></select><select><option>كل الدول</option></select><select><option>كل الجهات</option></select><button class="btn" onclick="window.print()">تصدير التقرير</button></div></div></div></section>
+ <section id="risk" class="page"><div class="card"><h3>سجل المخاطر والتصعيد</h3><table id="riskT"></table></div></section>
+ <section id="raci" class="page"><div class="card"><h3>مصفوفة الصلاحيات RACI</h3><table id="raciT"></table></div></section>
+ <section id="users" class="page"><div class="card"><h3>المستخدمون والصلاحيات</h3><table id="usersT"></table></div></section>
+ <section id="settings" class="page"><div class="card"><h3>إعدادات المنصة</h3><div class="form"><input value="منصة حوكمة المجالس واللجان التنسيقية الدولية"><select><option>هوية وزارة التعليم</option></select><select><option>اللغة العربية</option></select><textarea>إعدادات التنبيهات، التصعيد، مدد التقارير، الصلاحيات، أنواع الوثائق، قوالب المحاضر.</textarea><button class="btn">حفظ الإعدادات</button></div></div></section>
+ <section id="roadmap" class="page"><div class="card"><h3>خارطة تطبيق النظام</h3><div class="process"><div class="step"><b>التحليل</b><span>حصر النماذج والإجراءات والصلاحيات.</span></div><div class="step"><b>النموذج الأولي</b><span>تصميم الواجهات وتجربة رحلة المستخدم.</span></div><div class="step"><b>الربط المؤسسي</b><span>SharePoint Lists / Power Automate / Power BI.</span></div><div class="step"><b>التشغيل التجريبي</b><span>تطبيق على عدد محدود من المجالس واللجان.</span></div><div class="step"><b>التعميم</b><span>تدريب المستخدمين وتفعيل التقارير القيادية.</span></div></div></div></section>
+</main>
+</div>
+<div class="modal" id="modal"><div class="box"><button class="close" onclick="closeModal()">إغلاق</button><h3 id="modalTitle"></h3><p id="modalText"></p></div></div>
+<script>
+const pages=[['dashboard','لوحة القيادة التنفيذية','⌂'],['login','تسجيل الدخول','🔐'],['countries','الدول','◎'],['countryFile','ملف الدولة','▣'],['councils','المجالس واللجان','☷'],['councilProfile','بطاقة المجلس/اللجنة','◧'],['initiatives','المبادرات','◫'],['initiativeForm','نموذج مبادرة','＋'],['meetings','الاجتماعات','📅'],['agenda','جدول الأعمال','☰'],['attendance','الحضور','👥'],['minutes','المحاضر','☑'],['decisions','القرارات','⚑'],['recommendations','التوصيات','✓'],['tasks','المهام التنفيذية','↻'],['approvals','مسارات الاعتماد','⇄'],['documents','الوثائق','▤'],['agreements','الاتفاقيات','◇'],['reports','التقارير','◬'],['risk','المخاطر والتصعيد','⚠'],['raci','RACI','⚙'],['users','المستخدمون','👤'],['settings','الإعدادات','⚙'],['roadmap','خارطة التطبيق','🧭']];
+nav.innerHTML=pages.map((p,i)=>`<button class="${i==0?'active':''}" data-page="${p[0]}">${p[1]} <span>${p[2]}</span></button>`).join('');
+const titles=Object.fromEntries(pages.map(p=>[p[0],p[1]]));
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));pageTitle.textContent=titles[id];scrollTo(0,0)}
+nav.onclick=e=>{let b=e.target.closest('button'); if(b) go(b.dataset.page)}
+function openModal(t,x){modal.classList.add('show');modalTitle.textContent=t;modalText.textContent=x}
+function closeModal(){modal.classList.remove('show')}
+function table(id,h,r){document.getElementById(id).innerHTML='<tr>'+h.map(x=>`<th>${x}</th>`).join('')+'</tr>'+r.map(a=>'<tr>'+a.map(x=>`<td>${x}</td>`).join('')+'</tr>').join('')}
+table('latest',['البند','الدولة','المسؤول','الحالة'],[['محضر اجتماع','الصين','مدير الإدارة','<span class="badge wait">اعتماد</span>'],['توصية تدريب','الأردن','التدريب التقني','<span class="badge late">متأخرة</span>'],['مبادرة بحثية','تركيا','التعليم العالي','<span class="badge run">قيد التنفيذ</span>']]);
+table('countriesT',['الدولة','عدد اللجان','المبادرات','الاتفاقيات','نسبة الإنجاز'],[['الصين','4','27','6','81%'],['تركيا','3','18','3','72%'],['الأردن','2','12','2','66%'],['مصر','3','21','4','74%']]);
+table('countryWork',['المكون','العدد','آخر تحديث','الحالة'],[['اجتماعات','9','2026/06/20','<span class="badge run">نشط</span>'],['توصيات','31','2026/06/18','<span class="badge late">3 متأخرة</span>'],['وثائق','44','2026/06/15','<span class="badge ok">مؤرشفة</span>']]);
+table('councilsT',['الاسم','الدولة','النوع','الأمانة','الحالة'],[['المجلس السعودي الصيني للتعليم','الصين','مجلس','وزارة التعليم','<span class="badge ok">نشط</span>'],['اللجنة السعودية التركية','تركيا','لجنة مشتركة','وزارة التعليم','<span class="badge run">قيد التحضير</span>']]);
+table('initiativesT',['المبادرة','الدولة','الجهة','الإنجاز','الحالة'],[['تبادل طلابي','الصين','التعليم العالي','65%','<span class="badge run">قيد التنفيذ</span>'],['منصة تدريب مشتركة','الأردن','التدريب التقني','30%','<span class="badge late">متأخرة</span>']]);
+table('meetingsT',['الاجتماع','النوع','التاريخ','المخرجات','الحالة'],[['اللجنة السعودية التركية','فني','2026/07/15','5 توصيات','<span class="badge run">مجدول</span>'],['المجلس السعودي الصيني','وزاري','2026/08/20','8 قرارات','<span class="badge wait">تحضير</span>']]);
+table('attendanceT',['الاسم','الجهة','الدور','الحضور'],[['مدير الإدارة','وكالة التعاون الدولي','رئيس فريق','حاضر'],['ممثل الشؤون القانونية','الشؤون القانونية','مراجع','حاضر']]);
+table('minutesT',['رقم المحضر','الاجتماع','القرارات','مسار الاعتماد','الحالة'],[['M-2026-01','المجلس السعودي الصيني','8','مدير الإدارة ← صاحب الصلاحية','<span class="badge wait">بانتظار الاعتماد</span>']]);
+table('decisionsT',['القرار','الجهة المنفذة','تاريخ الاستحقاق','الحالة'],[['تفعيل برنامج تبادل الخبراء','التعليم العالي','2026/09/30','<span class="badge run">قيد التنفيذ</span>']]);
+table('recommendationsT',['التوصية','المالك','الإنجاز','التصعيد'],[['إعداد خطة تنفيذية للتدريب','التدريب التقني','30%','<span class="badge late">مطلوب</span>']]);
+table('tasksT',['المهمة','المسؤول','التاريخ','الحالة'],[['تحديث ملف الدولة','ضابط الاتصال','2026/06/30','<span class="badge run">قيد التنفيذ</span>']]);
+table('docsT',['الوثيقة','الدولة','النوع','الصلاحية'],[['محضر اللجنة السعودية الصينية','الصين','محضر','داخلي'],['اتفاقية تعاون تدريبي','تركيا','اتفاقية','مقيد']]);
+table('agreementsT',['الاتفاقية','الدولة','تاريخ التوقيع','الحالة'],[['مذكرة تعاون تعليمي','الصين','2025/12/01','<span class="badge ok">سارية</span>']]);
+table('riskT',['الخطر','الأثر','الاحتمال','الإجراء'],[['تأخر الرد من جهة مالكة','عالٍ','متوسط','تصعيد آلي بعد 7 أيام']]);
+table('raciT',['الإجراء','وكالة التعاون الدولي','أمانة اللجنة','الجهات داخل الوزارة','الشؤون القانونية','صاحب الصلاحية'],[['جمع المبادرات','R','C','R','C','I'],['مراجعة المحضر','C','R','C','A','I'],['التوقيع الوزاري','C','C','I','C','A'],['متابعة التنفيذ','R','I','R','-','I']]);
+table('usersT',['المستخدم','الدور','الصلاحية','الحالة'],[['مدير الإدارة','مالك النظام','اعتماد وتقارير','نشط'],['ضابط اتصال','منسق','إدخال وتحديث','نشط']]);
+new Chart(c1,{type:'doughnut',data:{labels:['مكتملة','قيد التنفيذ','متأخرة','لم تبدأ'],datasets:[{data:[38,45,12,5]}]},options:{plugins:{legend:{position:'right'}}}});
+new Chart(c2,{type:'bar',data:{labels:['التعليم العام','التعليم العالي','التدريب التقني','الجامعات','الابتعاث'],datasets:[{label:'نسبة الإنجاز',data:[62,78,71,83,56]}]},options:{scales:{y:{beginAtZero:true,max:100}}}});
+new Chart(c3,{type:'radar',data:{labels:['الاجتماعات','المبادرات','التوصيات','الأثر','الالتزام'],datasets:[{label:'الأداء',data:[85,75,70,60,90]}]}});
+new Chart(c4,{type:'line',data:{labels:['يناير','فبراير','مارس','أبريل','مايو','يونيو'],datasets:[{label:'المستهدف',data:[40,52,65,74,85,92]},{label:'المنجز',data:[35,49,58,71,80,88]}]},options:{scales:{y:{beginAtZero:true,max:100}}}});
+</script>
+</body>
+</html>
