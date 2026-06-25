@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة الحوكمة الإلكترونية — المجالس واللجان الدولية</title>
+<style>
+  :root {
+    --navy: #1B3E6F;
+    --navy-deep: #0e2744;
+    --navy-mid: #2C5F9E;
+    --gold: #C4973C;
+    --gold-light: #e8c97a;
+    --green: #1A7A4A;
+    --green-light: #e6f4ed;
+    --red: #c0392b;
+    --red-light: #fdf0ef;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --blue-light: #e8eff8;
+    --white: #ffffff;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-700: #334155;
+    --gray-900: #0f172a;
+    --sidebar-w: 240px;
+    --header-h: 60px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-900);
+    direction: rtl;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────────────── */
+  .header {
+    position: fixed; top: 0; right: 0; left: 0; z-index: 100;
+    height: var(--header-h);
+    background: var(--navy-deep);
+    border-bottom: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .header-brand { display: flex; align-items: center; gap: 12px; }
+  .header-logo {
+    width: 38px; height: 38px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: var(--navy-deep);
+    flex-shrink: 0;
+  }
+  .header-title { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.2; }
+  .header-sub { color: #8bb2d4; font-size: 10px; margin-top: 1px; }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .header-user {
+    display: flex; align-items: center; gap: 8px;
+    color: #c8d8f0; font-size: 12px;
+  }
+  .header-user-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--navy-mid); border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--gold);
+  }
+  .notif-btn {
+    background: none; border: none; cursor: pointer;
+    color: #8bb2d4; font-size: 18px; position: relative; padding: 4px;
+  }
+  .notif-dot {
+    position: absolute; top: 2px; left: 2px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gold); border: 1px solid var(--navy-deep);
+  }
+
+  /* ── SIDEBAR ─────────────────────────────────────── */
+  .sidebar {
+    position: fixed; top: var(--header-h); right: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--navy-deep);
+    border-left: 1px solid rgba(196,151,60,0.2);
+    overflow-y: auto; z-index: 90;
+    padding: 16px 0;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+
+  .sb-section-label {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); padding: 10px 16px 4px;
+    border-bottom: 1px solid rgba(196,151,60,0.15);
+    margin-bottom: 4px;
+  }
+  .sb-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; cursor: pointer;
+    font-size: 13px; color: #8bb2d4;
+    border-right: 3px solid transparent;
+    transition: all 0.15s;
+  }
+  .sb-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .sb-item.active { background: rgba(196,151,60,0.12); color: #fff; border-right-color: var(--gold); }
+  .sb-icon { font-size: 16px; width: 20px; text-align: center; }
+  .sb-badge {
+    margin-right: auto; background: var(--navy-mid); color: var(--gold);
+    font-size: 10px; padding: 1px 7px; border-radius: 10px;
+  }
+  .sb-item.active .sb-badge { background: var(--gold); color: var(--navy-deep); }
+
+  /* ── MAIN ─────────────────────────────────────────── */
+  .main {
+    margin-right: var(--sidebar-w);
+    margin-top: var(--header-h);
+    padding: 20px;
+    min-height: calc(100vh - var(--header-h));
+  }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── PAGE HEADER ──────────────────────────────────── */
+  .page-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .page-title { font-size: 20px; font-weight: 700; color: var(--navy); }
+  .page-sub { font-size: 12px; color: var(--gray-500); margin-top: 3px; }
+
+  /* ── BTN ──────────────────────────────────────────── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 6px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    border: none; transition: all 0.15s; font-family: inherit;
+  }
+  .btn-primary { background: var(--navy); color: #fff; }
+  .btn-primary:hover { background: var(--navy-mid); }
+  .btn-gold { background: var(--gold); color: var(--navy-deep); }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-ghost { background: var(--white); color: var(--gray-700); border: 1px solid var(--gray-200); }
+  .btn-ghost:hover { background: var(--gray-50); }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+  .btn-danger { background: var(--red); color: #fff; }
+
+  /* ── KPI CARDS ────────────────────────────────────── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+  .kpi-card {
+    background: var(--white); border-radius: 10px;
+    padding: 16px 18px;
+    border-right: 4px solid var(--navy);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .kpi-label { font-size: 11px; color: var(--gray-500); margin-bottom: 6px; }
+  .kpi-value { font-size: 30px; font-weight: 800; color: var(--navy); line-height: 1; }
+  .kpi-sub { font-size: 11px; color: var(--gray-400); margin-top: 5px; }
+  .kpi-bar { height: 3px; background: var(--gray-200); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .kpi-bar-fill { height: 100%; border-radius: 2px; }
+
+  /* ── CARDS / PANELS ───────────────────────────────── */
+  .card {
+    background: var(--white); border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+  .card-body { padding: 16px 18px; }
+
+  /* ── GRID LAYOUTS ─────────────────────────────────── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── BADGE / STATUS ───────────────────────────────── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+  .badge-green  { background: var(--green-light);  color: var(--green); }
+  .badge-amber  { background: var(--amber-light);  color: var(--amber); }
+  .badge-red    { background: var(--red-light);    color: var(--red); }
+  .badge-navy   { background: var(--blue-light);   color: var(--navy); }
+  .badge-gold   { background: #fdf6e3;             color: #b45309; }
+  .badge-gray   { background: var(--gray-100);     color: var(--gray-500); }
+
+  /* ── TABLE ────────────────────────────────────────── */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: right; padding: 10px 14px;
+    background: var(--gray-50); color: var(--gray-500);
+    font-size: 11px; font-weight: 600;
+    border-bottom: 1px solid var(--gray-200);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gray-50); }
+  .tbl-action-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--navy-mid); font-size: 13px; padding: 3px 6px;
+    border-radius: 4px; transition: background 0.1s;
+  }
+  .tbl-action-btn:hover { background: var(--blue-light); }
+
+  /* ── STEPS TIMELINE ───────────────────────────────── */
+  .steps-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex; gap: 16px; position: relative;
+    padding-bottom: 20px;
+  }
+  .step-item:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .step-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+    border: 2px solid;
+  }
+  .step-circle.done { background: var(--green); border-color: var(--green); color: #fff; }
+  .step-circle.current { background: var(--gold); border-color: var(--gold); color: var(--navy-deep); }
+  .step-circle.pending { background: var(--white); border-color: var(--gray-300); color: var(--gray-400); }
+  .step-circle.blocked { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .step-line { flex: 1; width: 2px; background: var(--gray-200); margin: 4px 0; }
+  .step-line.done { background: var(--green); }
+  .step-content { flex: 1; padding-top: 6px; }
+  .step-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .step-desc { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+  .step-meta { display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap; }
+  .step-meta-item { font-size: 11px; color: var(--gray-400); display: flex; align-items: center; gap: 4px; }
+
+  /* ── MODAL ────────────────────────────────────────── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--white); border-radius: 12px;
+    width: 680px; max-width: 95vw;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    transform: translateY(-20px);
+    transition: transform 0.2s;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; border-bottom: 1px solid var(--gray-200);
+    background: var(--navy); border-radius: 12px 12px 0 0;
+  }
+  .modal-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .modal-close {
+    background: none; border: none; cursor: pointer;
+    color: #8bb2d4; font-size: 20px; line-height: 1;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .modal-body { padding: 20px; }
+  .modal-footer {
+    padding: 14px 20px; border-top: 1px solid var(--gray-200);
+    display: flex; gap: 10px; justify-content: flex-start;
+  }
+
+  /* ── FORM ─────────────────────────────────────────── */
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+  .form-control {
+    width: 100%; padding: 9px 12px; border-radius: 6px;
+    border: 1px solid var(--gray-300); font-size: 13px;
+    font-family: inherit; color: var(--gray-900);
+    background: var(--white); direction: rtl;
+    transition: border 0.15s;
+  }
+  .form-control:focus { outline: none; border-color: var(--navy-mid); box-shadow: 0 0 0 2px rgba(44,95,158,0.15); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-hint { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+
+  /* ── RACI TABLE ───────────────────────────────────── */
+  .raci-table th, .raci-table td { text-align: center; padding: 8px 10px; font-size: 12px; }
+  .raci-table th:first-child, .raci-table td:first-child { text-align: right; }
+  .raci-r { background: #dbeafe; color: #1e40af; border-radius: 4px; padding: 2px 8px; font-weight: 700; font-size: 11px; }
+  .raci-a { background: #fef9c3; color: #854d0e; border-radius: 4px; padding: 2px 8px; font-weight: 700; font-size: 11px; }
+  .raci-c { background: #dcfce7; color: #166534; border-radius: 4px; padding: 2px 8px; font-weight: 700; font-size: 11px; }
+  .raci-i { background: #f3e8ff; color: #6b21a8; border-radius: 4px; padding: 2px 8px; font-weight: 700; font-size: 11px; }
+
+  /* ── NOTIFICATION ─────────────────────────────────── */
+  .notif-list { display: flex; flex-direction: column; gap: 8px; }
+  .notif-item {
+    display: flex; gap: 12px; padding: 12px;
+    border-radius: 8px; background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    cursor: pointer; transition: background 0.1s;
+  }
+  .notif-item:hover { background: var(--blue-light); }
+  .notif-item.unread { border-right: 3px solid var(--gold); }
+  .notif-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .notif-text { font-size: 12px; color: var(--gray-700); }
+  .notif-time { font-size: 10px; color: var(--gray-400); margin-top: 3px; }
+
+  /* ── FLOW DIAGRAM ─────────────────────────────────── */
+  .flow-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .flow-step {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px; border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    transition: all 0.15s; cursor: pointer;
+  }
+  .flow-step:hover { border-color: var(--navy-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .flow-step.active-step { border-color: var(--gold); background: #fdf6e3; }
+  .flow-step.done-step { border-color: var(--green); background: var(--green-light); }
+  .flow-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .flow-step.active-step .flow-num { background: var(--gold); color: var(--navy-deep); }
+  .flow-step.done-step .flow-num { background: var(--green); }
+  .flow-info { flex: 1; }
+  .flow-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+  .flow-desc { font-size: 11px; color: var(--gray-500); margin-top: 3px; }
+  .flow-owner { font-size: 11px; }
+
+  /* ── TABS ─────────────────────────────────────────── */
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 2px solid var(--gray-200); }
+  .tab-btn {
+    padding: 8px 16px; font-size: 13px; font-weight: 600;
+    color: var(--gray-500); background: none; border: none;
+    cursor: pointer; border-bottom: 2px solid transparent;
+    margin-bottom: -2px; transition: all 0.15s; font-family: inherit;
+  }
+  .tab-btn.active { color: var(--navy); border-bottom-color: var(--navy); }
+  .tab-btn:hover { color: var(--navy); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── SEARCH BAR ───────────────────────────────────── */
+  .search-bar {
+    display: flex; gap: 10px; margin-bottom: 16px; align-items: center;
+  }
+  .search-input-wrap { position: relative; flex: 1; }
+  .search-input {
+    width: 100%; padding: 9px 36px 9px 12px;
+    border: 1px solid var(--gray-300); border-radius: 6px;
+    font-size: 13px; font-family: inherit; direction: rtl;
+    background: var(--white);
+  }
+  .search-input:focus { outline: none; border-color: var(--navy-mid); }
+  .search-icon {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--gray-400); pointer-events: none;
+  }
+
+  /* ── PROGRESS RING ────────────────────────────────── */
+  .progress-ring-wrap { position: relative; width: 80px; height: 80px; }
+  .progress-ring-text {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; color: var(--navy);
+  }
+  .progress-ring-sub { font-size: 9px; color: var(--gray-500); font-weight: 400; }
+
+  /* ── ALERT ────────────────────────────────────────── */
+  .alert {
+    display: flex; gap: 12px; padding: 12px 14px; border-radius: 8px;
+    margin-bottom: 12px; align-items: flex-start;
+  }
+  .alert-amber { background: var(--amber-light); border-right: 3px solid var(--amber); }
+  .alert-red { background: var(--red-light); border-right: 3px solid var(--red); }
+  .alert-green { background: var(--green-light); border-right: 3px solid var(--green); }
+  .alert-navy { background: var(--blue-light); border-right: 3px solid var(--navy); }
+  .alert-icon { font-size: 18px; flex-shrink: 0; }
+  .alert-text { font-size: 12px; color: var(--gray-700); }
+  .alert-title { font-weight: 700; margin-bottom: 2px; }
+
+  /* ── TOOLTIP ──────────────────────────────────────── */
+  [data-tip] { position: relative; }
+  [data-tip]::after {
+    content: attr(data-tip);
+    position: absolute; bottom: calc(100% + 6px); right: 50%;
+    transform: translateX(50%);
+    background: var(--gray-900); color: #fff;
+    padding: 4px 8px; border-radius: 4px; font-size: 11px;
+    white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity 0.15s;
+    z-index: 999;
+  }
+  [data-tip]:hover::after { opacity: 1; }
+
+  /* ── MISC ─────────────────────────────────────────── */
+  .empty-state {
+    text-align: center; padding: 48px 20px; color: var(--gray-400);
+  }
+  .empty-state-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state-text { font-size: 14px; }
+
+  .divider { height: 1px; background: var(--gray-200); margin: 16px 0; }
+
+  .chip {
+    display: inline-block; padding: 2px 9px; border-radius: 12px;
+    font-size: 11px; background: var(--blue-light); color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-right: 0; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ██ HEADER ██ -->
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">و</div>
+    <div>
+      <div class="header-title">منصة الحوكمة الإلكترونية</div>
+      <div class="header-sub">المجالس واللجان الدولية — وزارة التعليم</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="notif-btn" onclick="showView('notifications')" title="الإشعارات">
+      🔔<span class="notif-dot"></span>
+    </button>
+    <div class="header-user">
+      <div class="header-user-avatar">إ</div>
+      <div>
+        <div style="font-weight:600;font-size:12px;color:#fff;">إيمان المحمدي</div>
+        <div style="font-size:10px;color:#8bb2d4;">وكالة التعاون الدولي</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ██ SIDEBAR ██ -->
+<nav class="sidebar">
+  <div class="sb-section-label">الرئيسية</div>
+  <div class="sb-item active" onclick="showView('dashboard',this)">
+    <span class="sb-icon">📊</span>لوحة المتابعة
+  </div>
+  <div class="sb-item" onclick="showView('notifications',this)">
+    <span class="sb-icon">🔔</span>الإشعارات
+    <span class="sb-badge">3</span>
+  </div>
+
+  <div class="sb-section-label" style="margin-top:8px;">إجراءات اللجان</div>
+  <div class="sb-item" onclick="showView('committees',this)">
+    <span class="sb-icon">🏛️</span>المجالس واللجان
+    <span class="sb-badge">8</span>
+  </div>
+  <div class="sb-item" onclick="showView('workflow',this)">
+    <span class="sb-icon">⚙️</span>مسار الإجراءات
+  </div>
+  <div class="sb-item" onclick="showView('initiatives',this)">
+    <span class="sb-icon">🚀</span>المبادرات والمقترحات
+    <span class="sb-badge">12</span>
+  </div>
+  <div class="sb-item" onclick="showView('meetings',this)">
+    <span class="sb-icon">📅</span>الاجتماعات
+    <span class="sb-badge">3</span>
+  </div>
+  <div class="sb-item" onclick="showView('minutes',this)">
+    <span class="sb-icon">📋</span>المحاضر والقرارات
+  </div>
+
+  <div class="sb-section-label" style="margin-top:8px;">الحوكمة</div>
+  <div class="sb-item" onclick="showView('tracking',this)">
+    <span class="sb-icon">📌</span>متابعة التنفيذ
+  </div>
+  <div class="sb-item" onclick="showView('raci',this)">
+    <span class="sb-icon">👥</span>مصفوفة الصلاحيات
+  </div>
+  <div class="sb-item" onclick="showView('reports',this)">
+    <span class="sb-icon">📈</span>التقارير الدورية
+  </div>
+  <div class="sb-item" onclick="showView('docs',this)">
+    <span class="sb-icon">🗂️</span>مستودع الوثائق
+  </div>
+</nav>
+
+<!-- ██ MAIN CONTENT ██ -->
+<main class="main">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: DASHBOARD -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-dashboard" class="view active">
+  <div class="page-header">
+    <div>
+      <div class="page-title">لوحة المتابعة</div>
+      <div class="page-sub">وكالة التعاون الدولي — يونيو 2026</div>
+    </div>
+    <button class="btn btn-gold" onclick="openModal('newCommitteeModal')">➕ لجنة جديدة</button>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card" style="border-right-color:var(--navy)">
+      <div class="kpi-label">اللجان والمجالس النشطة</div>
+      <div class="kpi-value">64</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:83%;background:var(--navy)"></div></div>
+      <div class="kpi-sub">53 نشطة • 11 غير نشطة</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--gold)">
+      <div class="kpi-label">المبادرات الجارية</div>
+      <div class="kpi-value">22</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:65%;background:var(--gold)"></div></div>
+      <div class="kpi-sub">من أصل 51 مبادرة موثقة</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--green)">
+      <div class="kpi-label">توصيات منجزة</div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:40%;background:var(--green)"></div></div>
+      <div class="kpi-sub">من أصل 10 توصيات للمتابعة</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--amber)">
+      <div class="kpi-label">اجتماعات مجدولة</div>
+      <div class="kpi-value">3</div>
+      <div class="kpi-bar"><div class="kpi-bar-fill" style="width:30%;background:var(--amber)"></div></div>
+      <div class="kpi-sub">خلال الربع الثالث 2026</div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div class="alert alert-amber">
+    <span class="alert-icon">⚠️</span>
+    <div class="alert-text">
+      <div class="alert-title">تنبيه: مبادرات متأخرة</div>
+      مبادرة NAVTTC-TVTC باكستان تجاوزت موعد المراجعة الأولى. يُرجى التنسيق مع ضابط الاتصال.
+    </div>
+  </div>
+  <div class="alert alert-navy">
+    <span class="alert-icon">📋</span>
+    <div class="alert-text">
+      <div class="alert-title">في الانتظار: محضر الدورة 12 — الكندية</div>
+      المحضر بانتظار التوقيع الوزاري. يُرجى رفعه خلال 3 أيام عمل.
+    </div>
+  </div>
+
+  <!-- Grid Row -->
+  <div class="grid-2" style="margin-top:16px;">
+    <!-- Recent Activities -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">آخر الإجراءات</span>
+        <button class="btn btn-ghost btn-sm" onclick="showView('workflow')">عرض المسار الكامل</button>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div style="padding:14px 18px;" id="recent-list">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress by Country -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">نسبة الإنجاز حسب الدولة</span>
+      </div>
+      <div class="card-body">
+        <div id="country-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upcoming Meetings -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-header">
+      <span class="card-title">الاجتماعات القادمة</span>
+      <button class="btn btn-primary btn-sm" onclick="openModal('newMeetingModal')">➕ جدولة اجتماع</button>
+    </div>
+    <div class="card-body tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>اللجنة</th><th>الدولة</th><th>الدورة</th><th>الموعد المقترح</th><th>المكان</th><th>الحالة</th><th>إجراء</th></tr>
+        </thead>
+        <tbody id="meetings-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: COMMITTEES -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-committees" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">المجالس واللجان الدولية المشتركة</div>
+      <div class="page-sub">64 لجنة ومجلس — موزعة على 6 قارات</div>
+    </div>
+    <button class="btn btn-gold" onclick="openModal('newCommitteeModal')">➕ إنشاء لجنة</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('comm','all',this)">الكل (64)</button>
+    <button class="tab-btn" onclick="switchTab('comm','active',this)">نشطة (53)</button>
+    <button class="tab-btn" onclick="switchTab('comm','inactive',this)">غير نشطة (11)</button>
+  </div>
+
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" placeholder="ابحث باسم اللجنة أو الدولة..." oninput="filterCommittees(this.value)">
+    </div>
+    <select class="form-control" style="width:160px;" onchange="filterByContinent(this.value)">
+      <option value="">كل القارات</option>
+      <option value="آسيا">آسيا (19)</option>
+      <option value="أوروبا">أوروبا (22)</option>
+      <option value="أفريقيا">أفريقيا (16)</option>
+      <option value="أمريكا">أمريكا (5)</option>
+      <option value="أوقيانوسيا">أوقيانوسيا (2)</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>#</th><th>اللجنة / المجلس</th><th>الدولة</th><th>القارة</th><th>الدورات</th><th>الأمانة</th><th>الحالة</th><th>آخر تحديث</th><th>إجراء</th></tr>
+        </thead>
+        <tbody id="committees-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: WORKFLOW (الخطوات التنفيذية 16 خطوة) -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-workflow" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">مسار الإجراءات التنفيذية</div>
+      <div class="page-sub">الإجراءات المتبعة لتنظيم أعمال المجالس واللجان — 16 خطوة</div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost btn-sm" onclick="showView('raci')">مصفوفة RACI</button>
+      <select class="form-control" style="width:200px;" onchange="loadWorkflowFor(this.value)">
+        <option value="">— اختر لجنة —</option>
+        <option value="كندا">اللجنة السعودية الكندية (الدورة 12)</option>
+        <option value="الصين">اللجنة السعودية الصينية (رفيعة)</option>
+        <option value="ألمانيا">اللجنة السعودية الألمانية (الدورة 21)</option>
+        <option value="ماليزيا">مجلس التنسيق السعودي الماليزي</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <!-- Steps -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">خطوات الإجراء</span>
+        <span class="badge badge-amber" id="workflow-progress-badge">الخطوة 8 من 16</span>
+      </div>
+      <div class="card-body">
+        <div class="flow-wrap" id="workflow-steps"></div>
+      </div>
+    </div>
+
+    <!-- Step Detail -->
+    <div>
+      <div class="card" id="step-detail-card">
+        <div class="card-header">
+          <span class="card-title" id="step-detail-title">اختر خطوة للتفاصيل</span>
+        </div>
+        <div class="card-body" id="step-detail-body">
+          <div class="empty-state">
+            <div class="empty-state-icon">⚙️</div>
+            <div class="empty-state-text">انقر على أي خطوة لعرض تفاصيلها</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="card-header">
+          <span class="card-title">المخرجات المتوقعة</span>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="flow-step done-step" style="cursor:default;">
+              <div class="flow-num">✓</div>
+              <div class="flow-info"><div class="flow-title">محاضر لجان معتمدة</div></div>
+            </div>
+            <div class="flow-step done-step" style="cursor:default;">
+              <div class="flow-num">✓</div>
+              <div class="flow-info"><div class="flow-title">مبادرات تعاون رسمية</div></div>
+            </div>
+            <div class="flow-step active-step" style="cursor:default;">
+              <div class="flow-num">⏳</div>
+              <div class="flow-info"><div class="flow-title">توصيات تنفيذية قابلة للقياس</div></div>
+            </div>
+            <div class="flow-step" style="cursor:default;">
+              <div class="flow-num">4</div>
+              <div class="flow-info"><div class="flow-title">تقارير متابعة دورية</div></div>
+            </div>
+            <div class="flow-step" style="cursor:default;">
+              <div class="flow-num">5</div>
+              <div class="flow-info"><div class="flow-title">تعزيز التنسيق الحكومي الدولي</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: INITIATIVES -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-initiatives" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">المبادرات والمقترحات</div>
+      <div class="page-sub">51 مبادرة موثقة — 120 مبادرة إجمالاً</div>
+    </div>
+    <button class="btn btn-gold" onclick="openModal('newInitModal')">➕ إضافة مبادرة</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchInitTab('all',this)">الكل (51)</button>
+    <button class="tab-btn" onclick="switchInitTab('جاري العمل',this)">جاري (22)</button>
+    <button class="tab-btn" onclick="switchInitTab('مقترح',this)">مقترح (15)</button>
+    <button class="tab-btn" onclick="switchInitTab('مكتمل',this)">مكتمل (4)</button>
+    <button class="tab-btn" onclick="switchInitTab('لم يبدأ',this)">لم يبدأ (5)</button>
+    <button class="tab-btn" onclick="switchInitTab('مخطط',this)">مخطط / تنفيذ (8)</button>
+  </div>
+
+  <div class="card">
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>#</th><th>الدولة</th><th>اللجنة</th><th>الدورة</th><th>المبادرة</th><th>البداية</th><th>النهاية</th><th>الحالة</th><th>إجراء</th></tr>
+        </thead>
+        <tbody id="initiatives-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: MEETINGS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-meetings" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">إدارة الاجتماعات</div>
+      <div class="page-sub">تنسيق مواعيد الاجتماعات مع الجانب النظير</div>
+    </div>
+    <button class="btn btn-gold" onclick="openModal('newMeetingModal')">➕ جدولة اجتماع</button>
+  </div>
+  <div class="card">
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>اللجنة</th><th>الدولة</th><th>الدورة</th><th>التاريخ</th><th>المكان</th><th>نوع الاجتماع</th><th>الحالة</th><th>إجراء</th></tr>
+        </thead>
+        <tbody id="meetings-table-full"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: MINUTES -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-minutes" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">المحاضر والقرارات</div>
+      <div class="page-sub">توثيق واعتماد محاضر اجتماعات اللجان المشتركة</div>
+    </div>
+    <button class="btn btn-gold" onclick="openModal('newMinuteModal')">➕ محضر جديد</button>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><span class="card-title">محاضر بانتظار الاعتماد</span></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px;" id="pending-minutes"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">محاضر معتمدة ومُعممة</span></div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px;" id="approved-minutes"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: TRACKING -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-tracking" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">متابعة التنفيذ</div>
+      <div class="page-sub">مخاطبة الجهات ومتابعة تنفيذ التوصيات (الخطوة 15)</div>
+    </div>
+    <button class="btn btn-primary btn-sm">📤 إرسال تذكير</button>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card" style="border-right-color:var(--green)">
+      <div class="kpi-label">منجزة</div>
+      <div class="kpi-value" style="color:var(--green)">4</div>
+      <div class="kpi-sub">مكتملة بنجاح</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--navy)">
+      <div class="kpi-label">جاري التنفيذ</div>
+      <div class="kpi-value" style="color:var(--navy)">22</div>
+      <div class="kpi-sub">قيد العمل</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--amber)">
+      <div class="kpi-label">مخطط لها</div>
+      <div class="kpi-value" style="color:var(--amber)">8</div>
+      <div class="kpi-sub">في مرحلة التخطيط</div>
+    </div>
+    <div class="kpi-card" style="border-right-color:var(--red)">
+      <div class="kpi-label">متأخرة</div>
+      <div class="kpi-value" style="color:var(--red)">3</div>
+      <div class="kpi-sub">تجاوزت الموعد</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">التوصيات وحالة التنفيذ</span>
+      <span class="badge badge-amber">التقارير: ربع سنوية / نصف سنوية</span>
+    </div>
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table>
+        <thead>
+          <tr><th>#</th><th>التوصية</th><th>اللجنة</th><th>الجهة المنفذة</th><th>الموعد</th><th>نسبة الإنجاز</th><th>الحالة</th><th>إجراء</th></tr>
+        </thead>
+        <tbody id="tracking-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: RACI -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-raci" class="view">
+  <div class="page-header">
+    <div>
+      <div class="page-title">مصفوفة الصلاحيات RACI</div>
+      <div class="page-sub">توزيع المهام والصلاحيات على جميع الأطراف</div>
+    </div>
+  </div>
+
+  <div class="alert alert-navy" style="margin-bottom:16px;">
+    <span class="alert-icon">ℹ️</span>
+    <div class="alert-text">
+      <div class="alert-title">دليل الرموز</div>
+      <span class="raci-r">R</span> الجهة المنفذة فعلياً &nbsp;
+      <span class="raci-a">A</span> الجهة صاحبة القرار والاعتماد &nbsp;
+      <span class="raci-c">C</span> جهة يُؤخذ رأيها &nbsp;
+      <span class="raci-i">I</span> جهة يتم إشعارها
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table class="raci-table">
+        <thead>
+          <tr>
+            <th>#</th><th>الإجراء</th>
+            <th>وكالة التعاون الدولي</th>
+            <th>أمانة اللجنة</th>
+            <th>الجهات داخل الوزارة</th>
+            <th>الجهات الحكومية الأخرى</th>
+            <th>الشؤون القانونية</th>
+            <th>صاحب الصلاحية</th>
+          </tr>
+        </thead>
+        <tbody id="raci-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: REPORTS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-reports" class="view">
+  <div class="page-header">
+    <div><div class="page-title">التقارير الدورية</div></div>
+    <button class="btn btn-gold" onclick="openModal('newReportModal')">➕ إنشاء تقرير</button>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><span class="card-title">التقارير المتاحة</span></div>
+      <div class="card-body" id="reports-list"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">ملخص الأداء — Q2 2026</span></div>
+      <div class="card-body" id="perf-summary"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: DOCS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-docs" class="view">
+  <div class="page-header">
+    <div><div class="page-title">مستودع الوثائق</div></div>
+    <button class="btn btn-gold">📤 رفع وثيقة</button>
+  </div>
+  <div class="card">
+    <div class="card-body tbl-wrap" style="padding:0;">
+      <table>
+        <thead><tr><th>اسم الوثيقة</th><th>النوع</th><th>اللجنة</th><th>تاريخ الرفع</th><th>المستوى</th><th>إجراء</th></tr></thead>
+        <tbody id="docs-table"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- VIEW: NOTIFICATIONS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div id="view-notifications" class="view">
+  <div class="page-header">
+    <div><div class="page-title">الإشعارات والتنبيهات</div></div>
+    <button class="btn btn-ghost btn-sm">تحديد الكل كمقروء</button>
+  </div>
+  <div class="card">
+    <div class="card-body" id="notif-list"></div>
+  </div>
+</div>
+
+</main>
+
+<!-- ██ MODALS ██ -->
+
+<!-- Modal: New Committee -->
+<div class="modal-overlay" id="newCommitteeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">إنشاء لجنة / مجلس جديد</span>
+      <button class="modal-close" onclick="closeModal('newCommitteeModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-navy" style="margin-bottom:14px;">
+        <span class="alert-icon">📋</span>
+        <div class="alert-text"><b>الخطوة 1:</b> يتم إنشاء المجلس أو اللجنة بناءً على مستند نظامي معتمد مع الدولة النظيرة.</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">اسم اللجنة / المجلس *</label>
+          <input type="text" class="form-control" placeholder="اللجنة السعودية —"></div>
+        <div class="form-group"><label class="form-label">الدولة النظيرة *</label>
+          <input type="text" class="form-control" placeholder="اسم الدولة"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">القارة</label>
+          <select class="form-control"><option>آسيا</option><option>أوروبا</option><option>أفريقيا</option><option>أمريكا الشمالية</option><option>أمريكا الجنوبية</option><option>أوقيانوسيا</option></select></div>
+        <div class="form-group"><label class="form-label">أمانة اللجنة (الجانب السعودي)</label>
+          <select class="form-control">
+            <option>وزارة التعليم</option><option>وزارة الاستثمار</option>
+            <option>وزارة الخارجية</option><option>وزارة الطاقة</option>
+            <option>وزارة البيئة والمياه والزراعة</option>
+          </select></div>
+      </div>
+      <div class="form-group"><label class="form-label">نوع المستند النظامي (الخطوة 1)</label>
+        <select class="form-control">
+          <option>محضر لجنة مشتركة</option><option>اتفاقية أو مذكرة تفاهم</option><option>قرار رسمي مشترك</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">نطاق العمل / الاختصاصات</label>
+        <textarea class="form-control" rows="3" placeholder="وصف نطاق عمل اللجنة..."></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gold" onclick="submitNew('committee')">💾 حفظ وبدء مسار التشكيل</button>
+      <button class="btn btn-ghost" onclick="closeModal('newCommitteeModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: New Meeting -->
+<div class="modal-overlay" id="newMeetingModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">جدولة اجتماع لجنة (الخطوة 11)</span>
+      <button class="modal-close" onclick="closeModal('newMeetingModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">اللجنة *</label>
+          <select class="form-control"><option>اللجنة السعودية الكندية</option><option>اللجنة السعودية الصينية</option><option>اللجنة السعودية الألمانية</option></select></div>
+        <div class="form-group"><label class="form-label">رقم الدورة</label>
+          <input type="text" class="form-control" placeholder="مثال: الدورة 13"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">تاريخ الاجتماع *</label>
+          <input type="date" class="form-control"></div>
+        <div class="form-group"><label class="form-label">مكان الانعقاد</label>
+          <input type="text" class="form-control" placeholder="الرياض / عن بُعد"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">نوع الاجتماع</label>
+          <select class="form-control"><option>اجتماع فريق فني</option><option>اجتماع تحضيري</option><option>اجتماع وزاري</option><option>اجتماع افتراضي</option></select></div>
+        <div class="form-group"><label class="form-label">الجانب المستضيف</label>
+          <select class="form-control"><option>المملكة العربية السعودية</option><option>الدولة النظيرة</option></select></div>
+      </div>
+      <div class="form-group"><label class="form-label">ملاحظات</label>
+        <textarea class="form-control" rows="2"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gold" onclick="submitNew('meeting')">💾 تأكيد الجدولة</button>
+      <button class="btn btn-ghost" onclick="closeModal('newMeetingModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: New Initiative -->
+<div class="modal-overlay" id="newInitModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">إضافة مبادرة / مقترح (الخطوة 4)</span>
+      <button class="modal-close" onclick="closeModal('newInitModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-amber" style="margin-bottom:12px;">
+        <span class="alert-icon">📌</span>
+        <div class="alert-text">يقوم ضابط الاتصال المعتمد بتزويد الجهات المختصة بالمبادرات قبل رفعها لأمانة اللجنة (الخطوة 5).</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">اللجنة المشتركة *</label>
+          <select class="form-control"><option>اللجنة السعودية الكندية</option><option>اللجنة السعودية الصينية</option><option>اللجنة السعودية الألمانية</option></select></div>
+        <div class="form-group"><label class="form-label">الدولة</label>
+          <input type="text" class="form-control" placeholder="اسم الدولة"></div>
+      </div>
+      <div class="form-group"><label class="form-label">عنوان المبادرة *</label>
+        <input type="text" class="form-control" placeholder="وصف موجز للمبادرة"></div>
+      <div class="form-group"><label class="form-label">تفاصيل المبادرة</label>
+        <textarea class="form-control" rows="3"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">تاريخ البداية</label>
+          <input type="date" class="form-control"></div>
+        <div class="form-group"><label class="form-label">تاريخ الانتهاء المتوقع</label>
+          <input type="date" class="form-control"></div>
+      </div>
+      <div class="form-group"><label class="form-label">الجهة المقترِحة داخل الوزارة</label>
+        <input type="text" class="form-control" placeholder="اسم الإدارة / الوحدة"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gold" onclick="submitNew('initiative')">💾 رفع المبادرة لأمانة اللجنة</button>
+      <button class="btn btn-ghost" onclick="closeModal('newInitModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: New Minute -->
+<div class="modal-overlay" id="newMinuteModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">إنشاء محضر اجتماع (الخطوة 12-13)</span>
+      <button class="modal-close" onclick="closeModal('newMinuteModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">اللجنة *</label>
+          <select class="form-control"><option>اللجنة السعودية الكندية</option></select></div>
+        <div class="form-group"><label class="form-label">تاريخ الاجتماع</label>
+          <input type="date" class="form-control"></div>
+      </div>
+      <div class="form-group"><label class="form-label">التوصيات الرئيسية</label>
+        <textarea class="form-control" rows="4" placeholder="أدرج التوصيات المعتمدة..."></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">حالة المحضر</label>
+          <select class="form-control"><option>مسودة</option><option>بانتظار المراجعة</option><option>بانتظار التوقيع الوزاري</option><option>موقع ومعتمد</option></select></div>
+        <div class="form-group"><label class="form-label">المرحلة</label>
+          <select class="form-control"><option>خطوة 12: إعداد الفرق الفنية</option><option>خطوة 13: التوقيع الوزاري</option><option>خطوة 14: التعميم</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gold" onclick="submitNew('minute')">💾 حفظ المحضر</button>
+      <button class="btn btn-ghost" onclick="closeModal('newMinuteModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Report -->
+<div class="modal-overlay" id="newReportModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">إنشاء تقرير دوري (الخطوة 15)</span>
+      <button class="modal-close" onclick="closeModal('newReportModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">نوع التقرير</label>
+          <select class="form-control"><option>ربع سنوي</option><option>نصف سنوي</option><option>سنوي</option></select></div>
+        <div class="form-group"><label class="form-label">الفترة الزمنية</label>
+          <input type="text" class="form-control" placeholder="مثال: Q2 2026"></div>
+      </div>
+      <div class="form-group"><label class="form-label">اللجان المشمولة</label>
+        <select class="form-control" multiple style="height:80px;"></select></div>
+      <div class="form-group"><label class="form-label">ملاحظات إضافية</label>
+        <textarea class="form-control" rows="2"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gold" onclick="submitNew('report')">📊 إنشاء التقرير</button>
+      <button class="btn btn-ghost" onclick="closeModal('newReportModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--navy-deep);color:#fff;padding:12px 22px;border-radius:8px;
+  font-size:13px;border-right:3px solid var(--gold);z-index:1000;
+  transition:transform 0.3s;box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  white-space:nowrap;
+"></div>
+
+<script>
+// ═══════════════════════════════════
+// DATA
+// ═══════════════════════════════════
+
+const COMMITTEES = [
+  {id:1,name:'اللجنة السعودية الأردنية',country:'الأردن',cont:'آسيا',sess:18,sec:'وزارة التعليم',status:'نشطة',updated:'2026-05-12'},
+  {id:2,name:'اللجنة السعودية المصرية',country:'مصر',cont:'أفريقيا',sess:18,sec:'وزارة التجارة',status:'نشطة',updated:'2026-04-20'},
+  {id:3,name:'اللجنة السعودية الألمانية',country:'ألمانيا',cont:'أوروبا',sess:21,sec:'وزارة الطاقة',status:'نشطة',updated:'2026-06-01'},
+  {id:4,name:'اللجنة السعودية الكندية',country:'كندا',cont:'أمريكا الشمالية',sess:12,sec:'وزارة الاستثمار',status:'نشطة',updated:'2026-06-10'},
+  {id:5,name:'اللجنة السعودية السويسرية',country:'سويسرا',cont:'أوروبا',sess:14,sec:'وزارة الاستثمار',status:'نشطة',updated:'2026-03-15'},
+  {id:6,name:'اللجنة السعودية المغربية',country:'المغرب',cont:'أفريقيا',sess:14,sec:'وزارة الخارجية',status:'نشطة',updated:'2026-02-28'},
+  {id:7,name:'اللجنة السعودية التونسية',country:'تونس',cont:'أفريقيا',sess:12,sec:'وزارة الصناعة',status:'نشطة',updated:'2026-04-05'},
+  {id:8,name:'مجلس التنسيق السعودي الماليزي',country:'ماليزيا',cont:'آسيا',sess:1,sec:'وزارة الخارجية',status:'نشطة',updated:'2026-05-30'},
+  {id:9,name:'اللجنة السعودية الصينية',country:'الصين',cont:'آسيا',sess:4,sec:'وزارة السياحة',status:'نشطة',updated:'2026-05-01'},
+  {id:10,name:'اللجنة السعودية الفرنسية',country:'فرنسا',cont:'أوروبا',sess:0,sec:'غير محدد',status:'غير نشطة',updated:'2023-01-10'},
+  {id:11,name:'اللجنة السعودية الإيطالية',country:'إيطاليا',cont:'أوروبا',sess:0,sec:'غير محدد',status:'غير نشطة',updated:'2022-08-15'},
+  {id:12,name:'اللجنة السعودية الهولندية',country:'هولندا',cont:'أوروبا',sess:0,sec:'غير محدد',status:'غير نشطة',updated:'2022-11-03'},
+];
+
+const INITIATIVES = [
+  {id:1,c:'كندا',com:'اللجنة السعودية الكندية',session:'الدورة 12',text:'المبادرة السعودية–الكندية للتعليم الشامل والصحة المدرسية',start:'2025',end:'2026',status:'مقترح'},
+  {id:2,c:'كندا',com:'اللجنة السعودية الكندية',session:'الدورة 12',text:'دعم القيادات التعليمية (STEAM، الذكاء الاصطناعي)',start:'2025',end:'2026',status:'مقترح'},
+  {id:3,c:'كندا',com:'اللجنة السعودية الكندية',session:'الدورة 12',text:'مذكرات تفاهم مع جامعات بريتش كولومبيا وميموريال',start:'2025',end:'2026',status:'جاري العمل'},
+  {id:4,c:'مصر',com:'اللجنة السعودية المصرية',session:'الدورة 18',text:'التعاون في STEAM والذكاء الاصطناعي والتربية الخاصة',start:'2024',end:'2026',status:'جاري العمل'},
+  {id:5,c:'مصر',com:'اللجنة السعودية المصرية',session:'الدورة 18',text:'التعليم الإلكتروني عن بُعد — جامعة الملك عبدالعزيز',start:'2024',end:'2025',status:'جاري العمل'},
+  {id:6,c:'تونس',com:'اللجنة السعودية التونسية',session:'الدورة 12',text:'تنويع سبل التعاون في التعليم العالي والبحث العلمي',start:'2023',end:'2025',status:'جاري العمل'},
+  {id:7,c:'جنوب أفريقيا',com:'اللجنة السعودية جنوب أفريقيا',session:'الدورة 10',text:'متابعة وتنفيذ توصيات الدورة 9',start:'2023',end:'2024',status:'مكتمل'},
+  {id:8,c:'فيتنام',com:'اللجنة السعودية الفيتنامية',session:'الدورة 6',text:'متابعة توصيات الدورة 5 — تبادل الطلاب',start:'2024',end:'2025',status:'مكتمل'},
+  {id:9,c:'الصين',com:'اللجنة السعودية الصينية',session:'رفيعة المستوى',text:'إيفاد 573 معلماً من الصين لتدريس اللغة الصينية',start:'2024',end:'2027',status:'جاري العمل'},
+  {id:10,c:'الصين',com:'اللجنة السعودية الصينية',session:'رفيعة المستوى',text:'تبادل المنح: 500 للصينيين + 50 للسعوديين سنوياً',start:'2025',end:'2027',status:'جاري العمل'},
+  {id:11,c:'ألمانيا',com:'اللجنة السعودية الألمانية',session:'الدورة 21',text:'التعليم المهني وربطه بسوق العمل',start:'2025',end:'2026',status:'مقترح'},
+  {id:12,c:'ألمانيا',com:'اللجنة السعودية الألمانية',session:'الدورة 21',text:'مختبر سحابي لأولمبياد المعلوماتية',start:'2025',end:'2026',status:'مقترح'},
+  {id:13,c:'باكستان',com:'اللجنة الوزارية التوجيهية',session:'لجنة وزارية',text:'التعاون في تعليم اللغة العربية في باكستان',start:'2023',end:'2030',status:'مخطط'},
+  {id:14,c:'باكستان',com:'اللجنة الوزارية التوجيهية',session:'لجنة وزارية',text:'تفعيل مذكرة NAVTTC و TVTC (2025-2027)',start:'2025',end:'2027',status:'جاري العمل'},
+  {id:15,c:'ماليزيا',com:'مجلس التنسيق السعودي الماليزي',session:'لجنة التعليم',text:'4 ورش عمل مشتركة (TIMSS، سياسات التعليم)',start:'2025',end:'2028',status:'جاري التنفيذ'},
+];
+
+const MEETINGS = [
+  {com:'اللجنة السعودية الكندية',country:'كندا',session:'الدورة 13',date:'2026-09-15',place:'أوتاوا، كندا',type:'اجتماع وزاري',status:'مجدول'},
+  {com:'اللجنة السعودية الصينية',country:'الصين',session:'رفيعة المستوى',date:'2026-10-22',place:'بكين',type:'اجتماع وزاري',status:'قيد التنسيق'},
+  {com:'مجلس التنسيق السعودي الماليزي',country:'ماليزيا',session:'الدورة 2',date:'2026-08-08',place:'الرياض',type:'اجتماع تحضيري',status:'مؤكد'},
+];
+
+const WORKFLOW_STEPS = [
+  {num:1, title:'الأساس النظامي لتشكيل اللجنة',desc:'التحقق من وجود مستند نظامي معتمد مع الدولة النظيرة',owner:'أمانة اللجنة',owners_all:'R:أمانة  A:صاحب الصلاحية  C:وكالة التعاون  I:الجهات  I:الحكومية  C:القانونية'},
+  {num:2, title:'إسناد أمانة اللجنة',desc:'إسناد الأمانة لإحدى الوزارات أو الجهات الحكومية',owner:'صاحب الصلاحية',owners_all:'R:أمانة  A:صاحب الصلاحية  C:وكالة التعاون'},
+  {num:3, title:'طلب تسمية ضباط الاتصال',desc:'مخاطبة الجهات الحكومية لتسمية ضابط اتصال رسمي لكل جهة',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  A:صاحب الصلاحية'},
+  {num:4, title:'حصر المبادرات والمقترحات',desc:'مخاطبة الجهات داخل الوزارة لجمع الموضوعات والمبادرات',owner:'ضابط الاتصال',owners_all:'R:وكالة التعاون + الجهات  C:الأمانة'},
+  {num:5, title:'رفع المقترحات إلى أمانة اللجنة',desc:'رفع الموضوعات رسمياً ضمن الإطار الزمني المحدد',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  A:أمانة  C:صاحب الصلاحية'},
+  {num:6, title:'استقبال موضوعات الجانب النظير',desc:'استقبال المبادرات من الجانب النظير ومواءمتها',owner:'أمانة اللجنة',owners_all:'R:أمانة  C:وكالة التعاون'},
+  {num:7, title:'التوافق الأولي مع الجانب النظير',desc:'مراجعة الموضوعات وإمكانية اقتراح موضوعات إضافية',owner:'أمانة اللجنة',owners_all:'R:أمانة  C:وكالة التعاون'},
+  {num:8, title:'المراجعة الداخلية في وزارة التعليم',desc:'دراسة الموضوعات للتحقق من التوافق والقابلية للتنفيذ',owner:'الجهات داخل الوزارة',owners_all:'R:الجهات  C:وكالة التعاون + صاحب الصلاحية'},
+  {num:9, title:'تحديد الموضوعات المشتركة النهائية',desc:'الاتفاق على 2-3 موضوعات ذات أولوية لجدول الأعمال',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  A:صاحب الصلاحية  C:الأمانة'},
+  {num:10, title:'إحالة التعديلات الجوهرية',desc:'إحالة أي موضوع يتضمن تعديلاً جوهرياً للجهة المختصة',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  A:صاحب الصلاحية'},
+  {num:11, title:'تحديد موعد اجتماع اللجنة',desc:'التنسيق مع الجانب النظير لتحديد موعد الاجتماع',owner:'أمانة اللجنة',owners_all:'R:أمانة  C:وكالة التعاون'},
+  {num:12, title:'اجتماعات الفرق الفنية',desc:'مناقشة جدول الأعمال وصياغة المحضر المشترك ومراجعته',owner:'أمانة اللجنة + الجهات',owners_all:'R:أمانة + الجهات  C:وكالة التعاون'},
+  {num:13, title:'التوقيع الوزاري على المحضر',desc:'عرض المحضر النهائي للتوقيع من الوزير أو رئيس الجانب',owner:'الوزير / رئيس الجانب',owners_all:'A:صاحب الصلاحية  C:وكالة التعاون + القانونية'},
+  {num:14, title:'تعميم المحضر على الجهات',desc:'إرسال المحضر الموقع رسمياً إلى الجهات الحكومية المعنية',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  C:الأمانة'},
+  {num:15, title:'متابعة التنفيذ والتقارير',desc:'مخاطبة الجهات التابعة ومتابعة التوصيات وطلب التقارير',owner:'وكالة التعاون الدولي',owners_all:'R:وكالة التعاون  R:الجهات  I:الأمانة'},
+  {num:16, title:'دورية انعقاد الاجتماعات',desc:'عقد اجتماعات اللجان مرة سنوياً بالتناوب بين الدولتين',owner:'أمانة اللجنة',owners_all:'بالتوافق بين الطرفين'},
+];
+
+const RACI_DATA = [
+  {step:1,action:'وجود مستند نظامي لتشكيل اللجنة',agency:'A',sec:'R',min:'C',gov:'I',legal:'I',auth:'C'},
+  {step:2,action:'إسناد أمانة اللجنة',agency:'A',sec:'R',min:'C',gov:'I',legal:'I',auth:'C'},
+  {step:3,action:'طلب تسمية ضباط الاتصال',agency:'R',sec:'C',min:'I',gov:'A',legal:'–',auth:'–'},
+  {step:4,action:'تسمية ضباط الاتصال',agency:'I',sec:'I',min:'–',gov:'R',legal:'–',auth:'–'},
+  {step:5,action:'جمع المبادرات والموضوعات',agency:'R',sec:'C',min:'R',gov:'C',legal:'–',auth:'–'},
+  {step:6,action:'رفع المقترحات لأمانة اللجنة',agency:'R',sec:'A',min:'I',gov:'C',legal:'–',auth:'–'},
+  {step:7,action:'استقبال موضوعات الجانب النظير',agency:'C',sec:'R',min:'I',gov:'I',legal:'–',auth:'–'},
+  {step:8,action:'التنسيق مع الجانب النظير',agency:'C',sec:'R',min:'I',gov:'I',legal:'–',auth:'–'},
+  {step:9,action:'المراجعة الداخلية للموضوعات',agency:'R',sec:'C',min:'R',gov:'I',legal:'C',auth:'–'},
+  {step:10,action:'تحديد الموضوعات ذات الأولوية',agency:'R',sec:'C',min:'I',gov:'C',legal:'C',auth:'A'},
+  {step:11,action:'إحالة التعديلات الجوهرية',agency:'R',sec:'A',min:'I',gov:'C',legal:'C',auth:'–'},
+  {step:12,action:'تسمية ضابط اتصال من وكالة التعاون',agency:'R',sec:'–',min:'I',gov:'I',legal:'–',auth:'A'},
+  {step:13,action:'تحديد موعد اجتماع اللجنة',agency:'C',sec:'R',min:'I',gov:'I',legal:'–',auth:'–'},
+  {step:14,action:'عقد اجتماعات الفرق الفنية',agency:'C',sec:'R',min:'R',gov:'R',legal:'–',auth:'–'},
+  {step:15,action:'إعداد المحضر النهائي ومراجعته',agency:'–',sec:'R',min:'I',gov:'C',legal:'R',auth:'C'},
+  {step:16,action:'التوقيع الوزاري على المحضر',agency:'–',sec:'C',min:'I',gov:'I',legal:'C',auth:'A'},
+  {step:17,action:'تعميم المحضر على الجهات',agency:'R',sec:'C',min:'I',gov:'I',legal:'–',auth:'–'},
+  {step:18,action:'متابعة التنفيذ والتقارير الدورية',agency:'R',sec:'I',min:'R',gov:'I',legal:'–',auth:'–'},
+];
+
+const TRACKING_DATA = [
+  {id:1,rec:'منح للطلاب البرتغاليين عبر منصة ادرس في السعودية',com:'اللجنة السعودية البرتغالية',entity:'الإدارة العامة للابتعاث',due:'2027-06-30',pct:35,status:'جاري'},
+  {id:2,rec:'إيفاد 573 معلم صيني لتدريس اللغة الصينية',com:'اللجنة السعودية الصينية',entity:'وزارة التعليم / التعليم العام',due:'2027-12-31',pct:18,status:'جاري'},
+  {id:3,rec:'تفعيل مذكرة NAVTTC-TVTC',com:'اللجنة الوزارية — باكستان',entity:'المؤسسة العامة للتدريب التقني',due:'2027-08-14',pct:5,status:'متأخر'},
+  {id:4,rec:'متابعة توصيات الدورة 9 جنوب أفريقيا',com:'اللجنة السعودية جنوب أفريقيا',entity:'وكالة التعاون الدولي',due:'2024-12-31',pct:100,status:'مكتمل'},
+  {id:5,rec:'ورش عمل TIMSS مع ماليزيا',com:'مجلس التنسيق السعودي الماليزي',entity:'المركز الوطني للتقويم والاعتماد',due:'2028-12-31',pct:20,status:'جاري'},
+];
+
+const DOCS_DATA = [
+  {name:'محضر الدورة 12 — السعودية الكندية',type:'محضر',com:'السعودية الكندية',date:'2025-11-15',level:'سري محدود'},
+  {name:'مذكرة تفاهم — جامعة الجوف وبريتش كولومبيا',type:'اتفاقية',com:'السعودية الكندية',date:'2025-10-01',level:'عام'},
+  {name:'برنامج عمل المحور الاجتماعي — باكستان',type:'برنامج تنفيذي',com:'الوزارية التوجيهية',date:'2026-06-01',level:'سري'},
+  {name:'تقرير متابعة Q1 2026',type:'تقرير',com:'جميع اللجان',date:'2026-04-30',level:'داخلي'},
+  {name:'قرار مجلس التنسيق السعودي الماليزي',type:'قرار رسمي',com:'السعودية الماليزية',date:'2026-05-20',level:'سري محدود'},
+];
+
+// ═══════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════
+
+function statusBadge(s) {
+  const m = {
+    'نشطة':'badge-green','غير نشطة':'badge-red',
+    'جاري العمل':'badge-green','جاري التنفيذ':'badge-green',
+    'مقترح':'badge-gold','مكتمل':'badge-navy',
+    'لم يبدأ':'badge-red','مخطط':'badge-amber',
+    'مجدول':'badge-navy','مؤكد':'badge-green',
+    'قيد التنسيق':'badge-amber','جاري':'badge-navy',
+    'متأخر':'badge-red','مكتمل':'badge-green',
+    'سري':'badge-red','سري محدود':'badge-amber',
+    'داخلي':'badge-navy','عام':'badge-green'
+  };
+  return `<span class="badge ${m[s]||'badge-gray'}">${s}</span>`;
+}
+
+function raciCell(v) {
+  if(!v||v==='–') return '–';
+  if(v==='R') return `<span class="raci-r">R</span>`;
+  if(v==='A') return `<span class="raci-a">A</span>`;
+  if(v==='C') return `<span class="raci-c">C</span>`;
+  if(v==='I') return `<span class="raci-i">I</span>`;
+  return v;
+}
+
+function pctBar(p) {
+  const c = p===100?'var(--green)':p>60?'var(--navy)':p>30?'var(--amber)':'var(--red)';
+  return `<div style="display:flex;align-items:center;gap:6px;">
+    <div style="flex:1;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;">
+      <div style="width:${p}%;height:100%;background:${c};border-radius:3px;"></div>
+    </div>
+    <span style="font-size:11px;color:var(--gray-500);min-width:28px;">${p}%</span>
+  </div>`;
+}
+
+// ═══════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════
+
+function renderDashboard() {
+  // Recent activities
+  const recentActs = [
+    {icon:'✅',text:'تم رفع محضر الدورة 12 الكندية للمراجعة النهائية',time:'منذ ساعتين',color:'var(--green)'},
+    {icon:'📬',text:'استقبلت موضوعات الجانب الألماني للدورة 22',time:'أمس'},
+    {icon:'⚠️',text:'تذكير: موعد رفع مبادرات اللجنة الصينية خلال 3 أيام',time:'أمس',color:'var(--amber)'},
+    {icon:'📋',text:'تم اعتماد توصيات الدورة 10 جنوب أفريقيا',time:'منذ 3 أيام',color:'var(--navy)'},
+  ];
+  document.getElementById('recent-list').innerHTML = recentActs.map(a=>`
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--gray-100);">
+      <span style="font-size:18px;">${a.icon}</span>
+      <div style="flex:1;">
+        <div style="font-size:12px;color:var(--gray-700);">${a.text}</div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:2px;">${a.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Country progress
+  const prog = [
+    {c:'كندا',p:55,color:'var(--navy)'},{c:'الصين',p:42,color:'var(--gold)'},
+    {c:'ألمانيا',p:35,color:'var(--green)'},{c:'ماليزيا',p:28,color:'var(--amber)'},
+    {c:'مصر',p:70,color:'var(--navy)'},{c:'باكستان',p:18,color:'var(--red)'},
+  ];
+  document.getElementById('country-progress').innerHTML = prog.map(r=>`
+    <div style="margin-bottom:12px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;">
+        <span style="font-weight:600;color:var(--gray-700);">${r.c}</span>
+        <span style="color:var(--gray-400);">${r.p}%</span>
+      </div>
+      <div style="height:7px;background:var(--gray-200);border-radius:4px;overflow:hidden;">
+        <div style="width:${r.p}%;height:100%;background:${r.color};border-radius:4px;"></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Meetings table
+  document.getElementById('meetings-table').innerHTML = MEETINGS.map(m=>`
+    <tr>
+      <td style="font-weight:600;font-size:12px;">${m.com}</td>
+      <td>${m.country}</td>
+      <td><span class="chip">${m.session}</span></td>
+      <td>${m.date}</td>
+      <td style="font-size:12px;">${m.place}</td>
+      <td>${statusBadge(m.status)}</td>
+      <td><button class="tbl-action-btn" onclick="openModal('newMeetingModal')">✏️ تفاصيل</button></td>
+    </tr>
+  `).join('');
+}
+
+function renderCommittees(filter='') {
+  const rows = COMMITTEES.filter(r=>
+    !filter || r.name.includes(filter) || r.country.includes(filter) || r.cont.includes(filter)
+  );
+  document.getElementById('committees-table').innerHTML = rows.map(r=>`
+    <tr>
+      <td style="color:var(--gray-400);font-size:11px;">${r.id}</td>
+      <td style="font-weight:600;font-size:12px;max-width:220px;">${r.name}</td>
+      <td>${r.country}</td>
+      <td><span class="chip">${r.cont}</span></td>
+      <td style="text-align:center;font-weight:700;color:var(--gold);">${r.sess||'—'}</td>
+      <td style="font-size:11px;color:var(--gray-500);">${r.sec}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="font-size:11px;color:var(--gray-400);">${r.updated}</td>
+      <td>
+        <button class="tbl-action-btn" onclick="loadWorkflowFor('${r.country}');showView('workflow')" title="عرض المسار">⚙️</button>
+        <button class="tbl-action-btn" title="تعديل">✏️</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--gray-400);">لا توجد نتائج</td></tr>';
+}
+
+function filterCommittees(v) { renderCommittees(v); }
+function filterByContinent(v) { renderCommittees(v); }
+
+let currentInitFilter = 'all';
+function renderInitiatives(filter='all') {
+  currentInitFilter = filter;
+  const rows = filter==='all'?INITIATIVES:INITIATIVES.filter(r=>r.status===filter);
+  document.getElementById('initiatives-table').innerHTML = rows.map(r=>`
+    <tr>
+      <td style="color:var(--gray-400);font-size:11px;">${r.id}</td>
+      <td style="font-weight:600;">${r.c}</td>
+      <td style="font-size:11px;color:var(--gray-500);max-width:140px;">${r.com}</td>
+      <td><span class="chip">${r.session}</span></td>
+      <td style="font-size:12px;max-width:240px;">${r.text}</td>
+      <td style="font-size:11px;">${r.start}</td>
+      <td style="font-size:11px;">${r.end}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td><button class="tbl-action-btn">✏️</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--gray-400);">لا توجد بيانات</td></tr>';
+}
+
+function renderMeetingsFull() {
+  document.getElementById('meetings-table-full').innerHTML = MEETINGS.map(m=>`
+    <tr>
+      <td style="font-weight:600;font-size:12px;">${m.com}</td>
+      <td>${m.country}</td>
+      <td><span class="chip">${m.session}</span></td>
+      <td>${m.date}</td>
+      <td>${m.place}</td>
+      <td style="font-size:12px;">${m.type}</td>
+      <td>${statusBadge(m.status)}</td>
+      <td>
+        <button class="tbl-action-btn" onclick="openModal('newMeetingModal')">✏️</button>
+        <button class="tbl-action-btn">📋 محضر</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderMinutes() {
+  const pending = [
+    {title:'محضر الدورة 12 — السعودية الكندية',stage:'بانتظار التوقيع الوزاري',date:'2026-06-18'},
+    {title:'محضر اجتماع الفريق الفني — ألمانيا',stage:'بانتظار المراجعة النهائية',date:'2026-06-20'},
+  ];
+  const approved = [
+    {title:'محضر الدورة 10 — جنوب أفريقيا',stage:'موقع ومعتمد ومُعمَّم',date:'2024-11-10'},
+    {title:'محضر الدورة 6 — فيتنام',stage:'موقع ومعتمد',date:'2025-03-05'},
+    {title:'محضر الدورة 18 — مصر',stage:'موقع ومعتمد ومُعمَّم',date:'2024-09-22'},
+  ];
+
+  document.getElementById('pending-minutes').innerHTML = pending.map(p=>`
+    <div style="padding:12px;border:1px solid var(--amber);border-radius:8px;background:#fffbeb;">
+      <div style="font-size:13px;font-weight:600;color:var(--gray-900);">${p.title}</div>
+      <div style="font-size:11px;color:var(--amber);margin:4px 0;">${p.stage}</div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <button class="btn btn-gold btn-sm" onclick="showToast('تم رفع المحضر للتوقيع ✅')">رفع للتوقيع</button>
+        <button class="btn btn-ghost btn-sm">عرض</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('approved-minutes').innerHTML = approved.map(p=>`
+    <div style="padding:12px;border:1px solid var(--gray-200);border-radius:8px;">
+      <div style="font-size:13px;font-weight:600;">${p.title}</div>
+      <div style="font-size:11px;color:var(--green);margin:4px 0;">✅ ${p.stage}</div>
+      <div style="font-size:11px;color:var(--gray-400);">${p.date}</div>
+    </div>
+  `).join('');
+}
+
+function renderTracking() {
+  document.getElementById('tracking-table').innerHTML = TRACKING_DATA.map(r=>`
+    <tr>
+      <td style="color:var(--gray-400);">${r.id}</td>
+      <td style="font-size:12px;max-width:220px;">${r.rec}</td>
+      <td style="font-size:11px;color:var(--gray-500);">${r.com}</td>
+      <td style="font-size:11px;">${r.entity}</td>
+      <td style="font-size:11px;">${r.due}</td>
+      <td style="min-width:120px;">${pctBar(r.pct)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td>
+        <button class="tbl-action-btn" onclick="showToast('تم إرسال التذكير 📬')">📤 تذكير</button>
+        <button class="tbl-action-btn">✏️</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderRaci() {
+  document.getElementById('raci-table').innerHTML = RACI_DATA.map(r=>`
+    <tr>
+      <td style="color:var(--gray-400);font-size:11px;">${r.step}</td>
+      <td style="text-align:right;font-size:12px;font-weight:500;max-width:220px;">${r.action}</td>
+      <td>${raciCell(r.agency)}</td>
+      <td>${raciCell(r.sec)}</td>
+      <td>${raciCell(r.min)}</td>
+      <td>${raciCell(r.gov)}</td>
+      <td>${raciCell(r.legal)}</td>
+      <td>${raciCell(r.auth)}</td>
+    </tr>
+  `).join('');
+}
+
+let currentWorkflow = 'كندا';
+let currentStep = 8;
+
+function renderWorkflow() {
+  document.getElementById('workflow-steps').innerHTML = WORKFLOW_STEPS.map((s,i)=>{
+    let cls='', icon=s.num;
+    if(s.num < currentStep) { cls='done-step'; icon='✓'; }
+    else if(s.num === currentStep) { cls='active-step'; icon='▶'; }
+    return `
+    <div class="flow-step ${cls}" onclick="selectStep(${s.num})">
+      <div class="flow-num">${icon}</div>
+      <div class="flow-info">
+        <div class="flow-title">الخطوة ${s.num}: ${s.title}</div>
+        <div class="flow-desc">${s.desc}</div>
+        <div class="flow-owner" style="margin-top:4px;">
+          <span class="badge ${cls==='done-step'?'badge-green':cls==='active-step'?'badge-amber':'badge-gray'}" style="font-size:10px;">${s.owner}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectStep(num) {
+  const s = WORKFLOW_STEPS[num-1];
+  document.getElementById('step-detail-title').textContent = `الخطوة ${s.num}: ${s.title}`;
+  document.getElementById('step-detail-body').innerHTML = `
+    <div class="alert alert-navy" style="margin-bottom:12px;">
+      <span class="alert-icon">📋</span>
+      <div class="alert-text"><b>الوصف:</b> ${s.desc}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">الجهة المنفذة</label>
+      <div class="badge badge-gold">${s.owner}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">توزيع RACI</label>
+      <div style="font-size:12px;color:var(--gray-600);line-height:1.8;">${s.owners_all}</div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+      ${num===currentStep?`<button class="btn btn-gold btn-sm" onclick="advanceStep()">✅ إتمام الخطوة والانتقال للتالية</button>`:''}
+      <button class="btn btn-ghost btn-sm" onclick="showToast('تم إرسال إشعار للجهة المعنية 📬')">📬 إشعار الجهة</button>
+    </div>
+  `;
+  // Highlight selected
+  document.querySelectorAll('.flow-step').forEach((el,i) => el.style.outline = (i===num-1)?'2px solid var(--gold)':'none');
+}
+
+function advanceStep() {
+  if(currentStep < 16) {
+    currentStep++;
+    document.getElementById('workflow-progress-badge').textContent = `الخطوة ${currentStep} من 16`;
+    renderWorkflow();
+    showToast(`تم الانتقال إلى الخطوة ${currentStep} ✅`);
+  }
+}
+
+function loadWorkflowFor(country) {
+  if(!country) return;
+  currentWorkflow = country;
+  currentStep = country==='كندا'?9:country==='الصين'?11:country==='ألمانيا'?7:8;
+  document.getElementById('workflow-progress-badge').textContent = `الخطوة ${currentStep} من 16`;
+  renderWorkflow();
+  showToast(`تم تحميل مسار اللجنة السعودية ${country === 'ماليزيا' ? '' : ''}${country} 📂`);
+}
+
+function renderReports() {
+  const reports = [
+    {title:'تقرير الربع الأول 2026',type:'ربع سنوي',date:'2026-04-30',status:'معتمد'},
+    {title:'تقرير المتابعة الشامل — 2025',type:'سنوي',date:'2026-01-15',status:'معتمد'},
+    {title:'تقرير الربع الثاني 2026',type:'ربع سنوي',date:'مجدول: 2026-07-31',status:'قيد الإعداد'},
+  ];
+  document.getElementById('reports-list').innerHTML = reports.map(r=>`
+    <div style="padding:12px;border:1px solid var(--gray-200);border-radius:8px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:13px;font-weight:600;">${r.title}</div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:3px;">${r.type} • ${r.date}</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        ${statusBadge(r.status)}
+        <button class="btn btn-ghost btn-sm">📥 تنزيل</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('perf-summary').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      ${[['اللجان النشطة','53','83%','var(--navy)'],['مبادرات منجزة','4','8%','var(--green)'],
+        ['اجتماعات عُقدت','6','—','var(--gold)'],['توصيات قيد التنفيذ','22','—','var(--amber)']].map(([l,v,p,c])=>`
+        <div style="padding:14px;background:var(--gray-50);border-radius:8px;border-right:3px solid ${c};">
+          <div style="font-size:11px;color:var(--gray-500);">${l}</div>
+          <div style="font-size:24px;font-weight:800;color:${c};margin:4px 0;">${v}</div>
+          ${p&&p!=='—'?`<div style="font-size:11px;color:var(--gray-400);">${p}</div>`:''}
+        </div>`).join('')}
+    </div>
+  `;
+}
+
+function renderDocs() {
+  document.getElementById('docs-table').innerHTML = DOCS_DATA.map(r=>`
+    <tr>
+      <td style="font-weight:600;font-size:12px;">📄 ${r.name}</td>
+      <td><span class="chip">${r.type}</span></td>
+      <td style="font-size:11px;">${r.com}</td>
+      <td style="font-size:11px;color:var(--gray-400);">${r.date}</td>
+      <td>${statusBadge(r.level)}</td>
+      <td>
+        <button class="tbl-action-btn">👁️ عرض</button>
+        <button class="tbl-action-btn">📥</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderNotifications() {
+  const notifs = [
+    {icon:'⚠️',text:'مبادرة NAVTTC-TVTC تجاوزت موعد المراجعة. يرجى التحديث.',time:'منذ 2 ساعة',unread:true},
+    {icon:'📋',text:'المحضر الكندي — الدورة 12 — بانتظار التوقيع الوزاري.',time:'أمس',unread:true},
+    {icon:'📬',text:'وصلت موضوعات الجانب الألماني للدورة 22. يرجى المراجعة (الخطوة 6).',time:'أمس',unread:true},
+    {icon:'✅',text:'تم اعتماد توصيات الدورة 10 جنوب أفريقيا.',time:'منذ 3 أيام',unread:false},
+    {icon:'📅',text:'تذكير: اجتماع مجلس التنسيق السعودي الماليزي في 8 أغسطس 2026.',time:'منذ 5 أيام',unread:false},
+  ];
+  document.getElementById('notif-list').innerHTML = `<div class="notif-list">`+notifs.map(n=>`
+    <div class="notif-item ${n.unread?'unread':''}">
+      <span class="notif-icon">${n.icon}</span>
+      <div style="flex:1;">
+        <div class="notif-text">${n.text}</div>
+        <div class="notif-time">${n.time}</div>
+      </div>
+      ${n.unread?'<span style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;"></span>':''}
+    </div>
+  `).join('')+`</div>`;
+}
+
+// ═══════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════
+
+function showView(viewId, sidebarEl) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const target = document.getElementById('view-'+viewId);
+  if(target) target.classList.add('active');
+
+  if(sidebarEl) {
+    document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+    sidebarEl.classList.add('active');
+  }
+
+  // Lazy render
+  if(viewId==='dashboard') renderDashboard();
+  else if(viewId==='committees') renderCommittees();
+  else if(viewId==='workflow') { renderWorkflow(); loadWorkflowFor(currentWorkflow); }
+  else if(viewId==='initiatives') renderInitiatives();
+  else if(viewId==='meetings') renderMeetingsFull();
+  else if(viewId==='minutes') renderMinutes();
+  else if(viewId==='tracking') renderTracking();
+  else if(viewId==='raci') renderRaci();
+  else if(viewId==='reports') renderReports();
+  else if(viewId==='docs') renderDocs();
+  else if(viewId==='notifications') renderNotifications();
+}
+
+function switchTab(group, filter, btn) {
+  document.querySelectorAll(`#view-${group==='comm'?'committees':'initiatives'} .tab-btn`).forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(group==='comm') renderCommittees(filter==='all'?'':filter);
+  else renderInitiatives(filter);
+}
+
+function switchInitTab(filter, btn) {
+  document.querySelectorAll('#view-initiatives .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderInitiatives(filter);
+}
+
+// ═══════════════════════════════════
+// MODALS
+// ═══════════════════════════════════
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); });
+});
+
+function submitNew(type) {
+  const msgs = {
+    committee:'تم إنشاء اللجنة وبدء مسار التشكيل ✅',
+    meeting:'تم جدولة الاجتماع وإرسال الدعوات ✅',
+    initiative:'تم رفع المبادرة لأمانة اللجنة ✅',
+    minute:'تم حفظ المحضر وإرساله للمراجعة ✅',
+    report:'تم إنشاء التقرير ✅'
+  };
+  document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));
+  showToast(msgs[type]||'تم الحفظ ✅');
+}
+
+// ═══════════════════════════════════
+// TOAST
+// ═══════════════════════════════════
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(()=>{ t.style.transform = 'translateX(-50%) translateY(80px)'; }, 3200);
+}
+
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+
+renderDashboard();
+</script>
+</body>
+</html>
