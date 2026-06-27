@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>وكالة التعاون الدولي – وزارة التعليم</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+  :root {
+    --navy:   #0D2240;
+    --navy2:  #163356;
+    --gold:   #C8973A;
+    --gold2:  #E8B455;
+    --cream:  #F7F4EE;
+    --white:  #FFFFFF;
+    --slate:  #4A5568;
+    --light:  #EAF0F8;
+    --green:  #1B6B3A;
+    --teal:   #1A7A6E;
+    --purple: #5B3D8A;
+    --border: #D4C5A0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--navy);
+    color: #fff;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 2px solid var(--gold);
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo-emblem {
+    width: 52px; height: 52px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800; color: var(--navy);
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+  .logo-text h1 { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; }
+  .logo-text p  { font-size: 12px; color: var(--gold2); font-weight: 400; margin-top: 2px; }
+  .header-meta  { font-size: 11px; color: rgba(255,255,255,0.55); text-align: left; }
+
+  /* NAV TABS */
+  nav {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--navy2);
+    padding: 0 20px;
+    gap: 2px;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 11px 20px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all .22s;
+    font-family: 'Tajawal', sans-serif;
+    background: none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+  }
+  .nav-tab:hover { color: var(--gold2); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 700; }
+
+  /* ─── MAIN ─── */
+  main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* SECTION */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow .22s, transform .18s;
+    position: relative;
+  }
+  .card:hover {
+    box-shadow: 0 8px 30px rgba(13,34,64,0.12);
+    transform: translateY(-2px);
+  }
+  .card-accent {
+    height: 5px;
+    background: var(--gold);
+  }
+  .card-accent.teal   { background: var(--teal); }
+  .card-accent.green  { background: var(--green); }
+  .card-accent.purple { background: var(--purple); }
+
+  .card-body { padding: 18px 20px 20px; }
+  .card-icon  { font-size: 28px; margin-bottom: 10px; }
+  .card-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .card-desc  { font-size: 13px; color: var(--slate); line-height: 1.65; }
+  .card-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--light);
+    color: var(--navy);
+    border: 1px solid var(--border);
+  }
+
+  /* HERO BANNER */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 60%, var(--navy2));
+    border-radius: 14px;
+    padding: 36px 36px 30px;
+    color: white;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: 30px; top: 50%; transform: translateY(-50%);
+    font-size: 90px;
+    opacity: 0.07;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px; font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: .5px;
+  }
+  .hero h2 { font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+  .hero p  { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.7; max-width: 680px; }
+
+  .hero-stats {
+    display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap;
+  }
+  .stat-box {
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat-box strong { display: block; font-size: 24px; font-weight: 800; color: var(--gold); }
+  .stat-box span   { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; display: block; }
+
+  /* ORG CHART */
+  .org-tree { margin-top: 22px; }
+  .org-node {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .org-node:hover { border-color: var(--gold); background: var(--light); }
+  .org-node.root {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+  }
+  .org-node.level1 { margin-right: 30px; border-right: 3px solid var(--gold); }
+  .org-node.level2 { margin-right: 60px; border-right: 3px solid var(--teal); }
+  .org-node.level3 { margin-right: 90px; border-right: 3px solid #ccc; font-size: 13px; }
+  .org-icon { font-size: 22px; flex-shrink: 0; }
+  .org-name { font-weight: 700; font-size: 14px; }
+  .org-desc { font-size: 12px; color: var(--slate); margin-top: 3px; }
+  .org-chevron { margin-right: auto; color: var(--gold); font-size: 14px; transition: transform .2s; }
+  .org-node.open .org-chevron { transform: rotate(90deg); }
+  .org-children { display: none; }
+  .org-children.open { display: block; }
+
+  /* TASKS LIST */
+  .tasks-header {
+    background: var(--navy);
+    color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 16px 22px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tasks-header h3 { font-size: 16px; font-weight: 700; }
+  .tasks-body { background: white; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+  .task-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 22px;
+    border-bottom: 1px solid #f0ede6;
+    transition: background .18s;
+    cursor: default;
+  }
+  .task-item:last-child { border-bottom: none; }
+  .task-item:hover { background: var(--light); }
+  .task-num {
+    min-width: 30px; height: 30px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; color: var(--navy);
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .task-text { font-size: 13.5px; color: var(--navy); line-height: 1.65; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,34,64,0.65);
+    z-index: 200;
+    display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 14px;
+    max-width: 680px; width: 100%;
+    max-height: 88vh; overflow-y: auto;
+    position: relative;
+  }
+  .modal-header {
+    background: var(--navy);
+    color: white;
+    padding: 22px 26px 18px;
+    border-radius: 14px 14px 0 0;
+    position: sticky; top: 0;
+  }
+  .modal-header h3 { font-size: 18px; font-weight: 800; }
+  .modal-header p  { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 5px; }
+  .modal-close {
+    position: absolute; top: 18px; left: 22px;
+    background: rgba(255,255,255,0.15); border: none; color: white;
+    width: 32px; height: 32px; border-radius: 50%; font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .18s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.28); }
+  .modal-body { padding: 22px 26px 26px; }
+
+  /* SEARCH */
+  .search-wrap {
+    position: relative; margin-bottom: 22px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 12px 46px 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    background: white;
+    color: var(--navy);
+    outline: none;
+    transition: border-color .2s;
+  }
+  .search-input:focus { border-color: var(--gold); }
+  .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
+
+  /* PAGE TITLE */
+  .page-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .page-sub   { font-size: 13.5px; color: var(--slate); }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--slate);
+    margin-bottom: 16px;
+  }
+  .breadcrumb .sep { color: #ccc; }
+
+  /* SECTION DIVIDER */
+  .divider {
+    border: none; border-top: 1.5px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* OBJECTIVES PANEL */
+  .obj-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .obj-top {
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    transition: background .18s;
+  }
+  .obj-top:hover { background: var(--light); }
+  .obj-icon { font-size: 26px; }
+  .obj-label { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .obj-goal  { font-size: 12.5px; color: var(--slate); margin-top: 3px; line-height: 1.5; }
+  .obj-toggle { margin-right: auto; font-size: 18px; color: var(--gold); transition: transform .2s; }
+  .obj-card.open .obj-toggle { transform: rotate(180deg); }
+  .obj-tasks { display: none; border-top: 1px solid #f0ede6; }
+  .obj-card.open .obj-tasks { display: block; }
+
+  /* HIGHLIGHT */
+  mark { background: #fff3cd; padding: 0 2px; border-radius: 3px; }
+
+
+
+  /* Executive refinement: remove decorative emoji icons and use official Ministry logo */
+  .card-icon, .org-icon, .obj-icon, .search-icon { display:none !important; }
+  .moe-logo-img {
+    width: 168px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,.18));
+  }
+  .header-logo { gap: 22px; }
+  .header-logo .logo-text { border-right: 1px solid rgba(232,180,85,.35); padding-right: 20px; }
+  .nav-tab { letter-spacing:0; }
+  .card-body { padding-top:20px; }
+  .org-node { gap:10px; }
+  .obj-top { gap:12px; }
+  .unit-list { margin-top:12px; display:grid; gap:8px; }
+  .unit-pill { background:var(--cream); border:1px solid rgba(200,151,58,.35); padding:8px 10px; border-radius:8px; font-size:12.5px; color:var(--navy); }
+
+  .sub-unit-card { margin-right: 24px; border-right: 4px solid var(--gold); }
+  .sub-unit-card .obj-label::before { content: "إدارة / وحدة · "; color: var(--gold); font-weight: 800; font-size: 12px; }
+
+  @media (max-width: 600px) {
+    .moe-logo-img { width: 118px; }
+    .header-logo { gap: 12px; }
+    .header-logo .logo-text { padding-right: 12px; }
+  }
+
+
+  .sub-unit-card { margin-right: 24px; border-right: 4px solid var(--gold); }
+  .sub-unit-card .obj-label::before { content: "إدارة / وحدة · "; color: var(--gold); font-weight: 800; font-size: 12px; }
+
+  @media (max-width: 600px) {
+    .header-top { padding: 10px 14px; }
+    main { padding: 16px 12px 50px; }
+    .hero { padding: 24px 20px; }
+    .hero h2 { font-size: 20px; }
+    .hero-stats { gap: 12px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="header-logo">
+      <img class="moe-logo-img" src="data:image/png;base64,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" alt="شعار وزارة التعليم">
+      <div class="logo-text">
+        <h1>وكالة التعاون الدولي</h1>
+        <p>وزارة التعليم – المملكة العربية السعودية</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      الدليل التنظيمي<br>نسخة محدثة – جمادى الأول 1447هـ
+    </div>
+  </div>
+  <nav>
+    <button class="nav-tab active" onclick="showSection('overview')">نظرة عامة</button>
+    <button class="nav-tab" onclick="showSection('structure')">الهيكل التنظيمي</button>
+    <button class="nav-tab" onclick="showSection('tasks')">المهام والمسؤوليات</button>
+    <button class="nav-tab" onclick="showSection('units')">الوحدات التنظيمية</button>
+    <button class="nav-tab" onclick="showSection('search')">بحث في الدليل</button>
+  </nav>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: OVERVIEW
+═══════════════════════════════════════════════ -->
+<div id="overview" class="section active">
+  <div class="hero">
+    <div class="hero-badge">الدليل التنظيمي · وزارة التعليم</div>
+    <h2>وكالة التعاون الدولي</h2>
+    <p>تتولى الوكالة تعزيز العلاقة بين الوزارة ونظيراتها والمنظمات والجهات الدولية ذات العلاقة بأعمال الوزارة، وتنفيذ أهداف وسياسات الوزارة في مجالات الملحقيات الثقافية والعلاقات الخارجية والمشاركة الدولية.</p>
+    <div class="hero-stats">
+      <div class="stat-box"><strong>3</strong><span>إدارات عامة</span></div>
+      <div class="stat-box"><strong>4</strong><span>وحدات تنظيمية رئيسية</span></div>
+      <div class="stat-box"><strong>15+</strong><span>مهمة ومسؤولية</span></div>
+      <div class="stat-box"><strong>110</strong><span>صفحة في الدليل</span></div>
+    </div>
+  </div>
+
+  <div class="page-title">القطاعات الرئيسية للوكالة</div>
+  <p class="page-sub">اضغط على أي بطاقة لاستعراض تفاصيل المهام والمسؤوليات</p>
+
+  <div class="cards-grid">
+    <div class="card" onclick="openModal('modal-agency')">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">وكالة التعاون الدولي</div>
+        <div class="card-desc">تعزيز العلاقة بين الوزارة ونظيراتها والمنظمات الدولية وتنفيذ أهداف الوزارة في مجالات الملحقيات الثقافية والعلاقات الخارجية.</div>
+        <span class="card-tag">هدف الوكالة الرئيسي</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('modal-attaché')">
+      <div class="card-accent teal"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">أمانة الملحقيات الثقافية</div>
+        <div class="card-desc">تسهيل أعمال الملحقيات الثقافية وتلبية احتياجاتها والتواصل مع الملحقيات والإدارات المعنية في الوزارة.</div>
+        <span class="card-tag">أمانة</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('modal-intl-rel')">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الإدارة العامة للعلاقات الدولية</div>
+        <div class="card-desc">توطيد العلاقة بين الوزارة ونظيراتها في الدول الأخرى، والمساهمة في تعزيز صورة الوزارة دولياً، وتحقيق مشاركات فاعلة ومثمرة.</div>
+        <span class="card-tag">إدارة عامة</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('modal-intl-org')">
+      <div class="card-accent green"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الإدارة العامة للمنظمات الدولية</div>
+        <div class="card-desc">تعزيز العلاقة مع المنظمات الدولية والإقليمية والمنظمات غير الربحية ذات العلاقة بالتعليم عبر القنوات الدبلوماسية.</div>
+        <span class="card-tag">إدارة عامة</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('modal-attachments')">
+      <div class="card-accent purple"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الملحقيات الثقافية</div>
+        <div class="card-desc">رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتلبية احتياجاتهم وحل مشاكلهم، وتعزيز التواصل الثقافي مع الدول الأخرى.</div>
+        <span class="card-tag">ملحقيات ثقافية</span>
+      </div>
+    </div>
+    <div class="card" onclick="openModal('modal-office')">
+      <div class="card-accent teal"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">مكتب وكيل التعاون الدولي</div>
+        <div class="card-desc">إدارة المعاملات والمستشارون والسكرتارية وتقديم الدعم الإداري والاستشاري للوكيل وتمثيل الوكالة في اللجان المختلفة.</div>
+        <span class="card-tag">مكتب الوكيل</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: STRUCTURE
+═══════════════════════════════════════════════ -->
+<div id="structure" class="section">
+  <div class="breadcrumb">
+    <span>وكالة التعاون الدولي</span>
+    <span class="sep">›</span>
+    <span>الهيكل التنظيمي</span>
+  </div>
+  <div class="page-title">الهيكل التنظيمي لوكالة التعاون الدولي</div>
+  <p class="page-sub">مستخرج من الدليل التنظيمي لوزارة التعليم – جمادى الأول 1447هـ · اضغط على أي عنصر لتوسيعه</p>
+
+  <div class="org-tree" style="margin-top:22px">
+
+    <!-- الوزير -->
+    <div class="org-node" style="background:var(--slate);color:white;border-color:var(--slate);border-radius:10px;margin-bottom:4px" onclick="toggleOrg(this)">
+      <span class="org-icon"></span>
+      <div><div class="org-name">وزير التعليم</div><div class="org-desc" style="color:rgba(255,255,255,.6)">المستوى الأول</div></div>
+    </div>
+
+    <!-- نائب الوزير -->
+    <div class="org-node level1" onclick="toggleOrg(this)">
+      <span class="org-icon"></span>
+      <div><div class="org-name">نائب الوزير</div><div class="org-desc">المستوى الثاني</div></div>
+      <span class="org-chevron">›</span>
+    </div>
+    <div class="org-children">
+
+      <!-- وكالة التعاون الدولي -->
+      <div class="org-node level2" onclick="toggleOrg(this)">
+        <span class="org-icon"></span>
+        <div><div class="org-name">وكالة التعاون الدولي</div><div class="org-desc">الوكيل – مستوى الوكالة</div></div>
+        <span class="org-chevron">›</span>
+      </div>
+      <div class="org-children">
+
+        <div class="org-node level3" onclick="toggleOrg(this)">
+          <span class="org-icon"></span>
+          <div><div class="org-name">مكتب الوكيل</div><div class="org-desc">الاتصالات الإدارية · المستشارون · السكرتارية</div></div>
+          <span class="org-chevron">›</span>
+        </div>
+        <div class="org-children" style="padding-right:120px">
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">الاتصالات الإدارية</div><div class="org-desc">إدارة المعاملات الواردة والصادرة وأرشفة الوثائق</div></div>
+          </div>
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">المستشارون</div><div class="org-desc">تقديم المشورة المستقلة ودراسة الموضوعات المحالة</div></div>
+          </div>
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">السكرتارية</div><div class="org-desc">جدولة الاجتماعات والتنسيق والمراسلات الرسمية</div></div>
+          </div>
+        </div>
+
+        <div class="org-node level3" onclick="toggleOrg(this)">
+          <span class="org-icon"></span>
+          <div><div class="org-name">أمانة الملحقيات الثقافية</div><div class="org-desc">شؤون الملحقين الثقافيين والموفدين · دعم أداء الملحقيات</div></div>
+          <span class="org-chevron">›</span>
+        </div>
+        <div class="org-children" style="padding-right:120px">
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon">👨‍</span>
+            <div><div class="org-name">شؤون الملحقين الثقافيين والموفدين</div><div class="org-desc">إعداد لائحة الإيفاد وتقويم الأداء ومتابعة قرارات الإيفاد</div></div>
+          </div>
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">دعم أداء الملحقيات الثقافية</div><div class="org-desc">التنسيق مع الملحقيات ومتابعة مؤشرات الأداء وتعزيز أفضل الممارسات</div></div>
+          </div>
+        </div>
+
+        <div class="org-node level3" onclick="toggleOrg(this)">
+          <span class="org-icon"></span>
+          <div><div class="org-name">الإدارة العامة للعلاقات الدولية</div><div class="org-desc">الزيارات والوفود الدولية · دعم العلاقات واللجان والمجالس الدولية</div></div>
+          <span class="org-chevron">›</span>
+        </div>
+        <div class="org-children" style="padding-right:120px">
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">الزيارات والوفود الدولية</div><div class="org-desc">ترتيب المقابلات والزيارات الخارجية وإعداد ملفات الضيوف</div></div>
+          </div>
+          <div class="org-node level3" style="border-right-color:#ccc" onclick="toggleOrg(this)">
+            <span class="org-icon"></span>
+            <div><div class="org-name">إدارة دعم العلاقات والمجالس واللجان التنسيقية الدولية</div><div class="org-desc">متابعة العلاقات الثنائية والمجالس واللجان والمبادرات والقرارات والتقارير التنفيذية</div></div>
+            <span class="org-chevron">›</span>
+          </div>
+          <div class="org-children" style="padding-right:150px">
+            <div class="org-node level3" style="border-right-color:#ddd"><span class="org-icon">•</span><div><div class="org-name">وحدة العلاقات الدولية</div><div class="org-desc">ملفات العلاقات الثنائية وأولويات التعاون مع الدول</div></div></div>
+            <div class="org-node level3" style="border-right-color:#ddd"><span class="org-icon">•</span><div><div class="org-name">وحدة المجالس واللجان التنسيقية الدولية</div><div class="org-desc">حوكمة أعمال المجالس واللجان ومحاضرها وقراراتها</div></div></div>
+            <div class="org-node level3" style="border-right-color:#ddd"><span class="org-icon">•</span><div><div class="org-name">وحدة المبادرات والمتابعة</div><div class="org-desc">تحويل المخرجات إلى مبادرات ومتابعة نسب الإنجاز</div></div></div>
+            <div class="org-node level3" style="border-right-color:#ddd"><span class="org-icon">•</span><div><div class="org-name">وحدة المعرفة والتوثيق</div><div class="org-desc">الأرشفة المؤسسية وقاعدة المعرفة وملفات المشاركات</div></div></div>
+            <div class="org-node level3" style="border-right-color:#ddd"><span class="org-icon">•</span><div><div class="org-name">وحدة التقارير التنفيذية</div><div class="org-desc">إعداد تقارير القيادات ولوحات المتابعة وقياس الأثر</div></div></div>
+          </div>
+        </div>
+
+        <div class="org-node level3" onclick="toggleOrg(this)">
+          <span class="org-icon"></span>
+          <div><div class="org-name">الإدارة العامة للمنظمات الدولية</div><div class="org-desc">منظمات ومجموعات التعليم الدولية · المنظمات الدولية غير الربحية</div></div>
+          <span class="org-chevron">›</span>
+        </div>
+        <div class="org-children" style="padding-right:120px">
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">منظمات ومجموعات التعليم الدولية</div><div class="org-desc">اليونسكو ومنظمة التعاون والتنمية الاقتصادية ومجموعات التعليم الدولية</div></div>
+          </div>
+          <div class="org-node level3" style="border-right-color:#ccc">
+            <span class="org-icon"></span>
+            <div><div class="org-name">المنظمات الدولية غير الربحية</div><div class="org-desc">تأطير العمل مع المنظمات غير الربحية وضبط الضوابط والمعايير</div></div>
+          </div>
+        </div>
+
+        <div class="org-node level3">
+          <span class="org-icon"></span>
+          <div><div class="org-name">الملحقيات الثقافية</div><div class="org-desc">رعاية المبتعثين السعوديين خارج المملكة وتعزيز التواصل الثقافي</div></div>
+        </div>
+
+      </div><!-- end وكالة -->
+    </div><!-- end نائب الوزير -->
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: TASKS
+═══════════════════════════════════════════════ -->
+<div id="tasks" class="section">
+  <div class="breadcrumb">
+    <span>وكالة التعاون الدولي</span>
+    <span class="sep">›</span>
+    <span>المهام والمسؤوليات</span>
+  </div>
+  <div class="page-title">المهام والمسؤوليات الكاملة</div>
+  <p class="page-sub">مُستخرجة حرفياً من الدليل التنظيمي لوزارة التعليم · ص 110–125</p>
+  <hr class="divider">
+
+  <!-- الوكالة الرئيسية -->
+  <div class="obj-card open" id="obj-agency">
+    <div class="obj-top" onclick="toggleObj('obj-agency')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">وكالة التعاون الدولي – الهدف العام</div>
+        <div class="obj-goal">تعزيز العلاقة بين الوزارة ونظيراتها والمنظمات والجهات الدولية ذات العلاقة بأعمال الوزارة وتنفيذ أهداف وسياسات الوزارة في مجالات الملحقيات الثقافية.</div>
+      </div>
+      <span class="obj-toggle">▲</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد وتحديث سياسات الملحقيات الثقافية في تمثيل المملكة ثقافياً ودعم مبتعثيها، والرقابة على تنفيذها بعد اعتمادها.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية، ومتابعة تنفيذها بعد اعتمادها، والعمل على تطويرها.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">إعداد خطة للتعاون مع المؤسسات التعليمية الدولية من خلال اللجان المشتركة والمجالس التنسيقية دولياً.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">إبراز المكانة العلمية والمعرفية للمملكة العربية السعودية ومدى التقدم الحاصل في هذه المجالات.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">تمثيل الوزارة في المنظمات والمحافل والمجالس واللجان والمجموعات الدولية المتعلقة بعمل الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">التنسيق والترتيب للمقابلات والزيارات الخارجية للوزير وزيارة الوفود التعليمية والطلابية الرسمية الأجنبية للمملكة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">تطوير وتعزيز الاتفاقات المتعلقة بالمنح الدراسية المقدمة من الدول الأجنبية، أو المؤسسات الدولية، أو الجهات الخاصة المحلية لأبناء المملكة.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التنسيق والترتيب للقاءات الوزير بسفراء الممثليات الأجنبية في المملكة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">التنسيق لمشاركة الوزارة في المؤتمرات والمعارض الدولية ذات العلاقة بتخصصية الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">تعزيز استفادة المملكة من عضويتها في المنظمات الدولية والإقليمية المتخصصة في التربية والثقافة والعلوم.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">متابعة تنفيذ قرارات المؤتمرات الإقليمية والدولية المتخصصة.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">الإشراف على المعارض والمؤتمرات والفعاليات الدولية التي تشارك فيها الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">13</span><span class="task-text">تقديم الاقتراحات اللازمة لتعديل أو تحديث الأنظمة واللوائح والتعليمات والقرارات والإجراءات الإدارية الخاصة بنشاط الملحقيات وفقاً لحاجة العمل والمتغيرات المستجدة.</span></div>
+        <div class="task-item"><span class="task-num">14</span><span class="task-text">تسهيل أعمال الملحقيات الثقافية، وتلبية احتياجاتها والتواصل مع الملحقيات والإدارات المعنية في الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">15</span><span class="task-text">رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتلبية احتياجاتهم وحل مشاكلهم، وتعزيز التواصل الثقافي مع الدول الأخرى، والتعليمي بين الجامعات الحكومية والخاصة ونظيراتها في الخارج.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- أمانة الملحقيات -->
+  <div class="obj-card" id="obj-attaché">
+    <div class="obj-top" onclick="toggleObj('obj-attaché')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">أمانة الملحقيات الثقافية</div>
+        <div class="obj-goal">تسهيل أعمال الملحقيات الثقافية، وتلبية احتياجاتها والتواصل مع الملحقيات والإدارات المعنية في الوزارة.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد مشروع لائحة الإيفاد للملحقيات بالتنسيق مع وكالة الشؤون القانونية والسياسات ووكالة الموارد البشرية، ومتابعة اعتمادها من جهات الاختصاص.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">اقتراح ضوابط ومعايير لتقويم الأداء للملحقين الثقافيين وقيادات الملحقية.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تنسيق الجهود المشتركة بين الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">التنسيق فيما يخص تهيئة الموظفين الموفدين مع القطاعات ذات العلاقة في الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">التنسيق بين الوزارة ووزارة الخارجية والجهات ذات العلاقة فيما يعنى بشؤون الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">تعزيز تبادل أفضل الممارسات بين الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">الاتصال الدائم بالملحقيات الثقافية لبحث الشؤون الإدارية.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">متابعة تقارير مؤشرات أداء الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">متابعة قرارات إيفاد الملاحق والموظفين للعمل بالملحقيات الثقافية بعد صدور الموافقات اللازمة.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">متابعة الأعمال ذات العلاقة بين الوزارة والملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">التواصل مع الملحقيات الثقافية ومسؤولي الوزارة لترتيب عقد اجتماعات وورش عمل مشتركة ووضع الجدول الزمني لهذه الاجتماعات والورش حسب الضرورة.</span></div>
+        <div class="task-item"><span class="task-num">13</span><span class="task-text">التنسيق مع الإدارة العامة للمراجعة الداخلية حيال ملاحظات الجهات الرقابية فيما يخص الملحقيات الثقافية وموظفيها ومتابعة معالجتها.</span></div>
+        <div class="task-item"><span class="task-num">14</span><span class="task-text">إعداد التقارير التنفيذية المتعلقة بشؤون المبتعثين والموفدين ومستوى الأداء من قبلهم.</span></div>
+        <div class="task-item"><span class="task-num">15</span><span class="task-text">تعزيز ومشاركة التجارب والممارسات المتميزة على مستوى المبتعثين والموفدين.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الإدارة العامة للعلاقات الدولية -->
+  <div class="obj-card" id="obj-intl-rel">
+    <div class="obj-top" onclick="toggleObj('obj-intl-rel')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">الإدارة العامة للعلاقات الدولية</div>
+        <div class="obj-goal">توطيد العلاقة بين الوزارة ونظيراتها في الدول الأخرى، والمساهمة في تعزيز صورة الوزارة دولياً، وتحقيق مشاركات فاعلة ومثمرة في المؤتمرات والفعاليات الدولية ذات العلاقة.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية، ومتابعة تنفيذها بعد اعتمادها، والعمل على تطويرها.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">ترتيب المقابلات والزيارات الخارجية للوزير وزيارات الوفود التعليمية والطلابية الرسمية والأجنبية للمملكة، بالتنسيق مع الجهات والقطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">طلب استخراج التأشيرات الحكومية للوفود والخبراء الأجانب لعقد لقاءات مع مسؤولي الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">إعداد ملف مفصل عن الضيف الزائر لمعالي الوزير وتسليمه لمكتب معاليه قبل الزيارة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">متابعة تنفيذ بنود الشراكات والاتفاقات وقرارات المؤتمرات الدولية والإقليمية في مجال الاختصاص، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">دعم أنشطة تمثيل الوزارة في المعارض والمؤتمرات والفعاليات الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">المشاركة مع الجهات الحكومية فيما يتعلق بتمثيل مصالح الوزارة حيال الشراكات الدولية.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">الرد على الاستفسارات التي ترد من وزارة الخارجية والملحقيات الثقافية السعودية بالخارج فيما يتعلق بالوثائق التعليمية الصادرة من المملكة، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">متابعة المساعدات التعليمية الدولية المقدمة من حكومة المملكة العربية السعودية بالتنسيق مع الجهات والقطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">إعداد خطط للتعاون مع المؤسسات التعليمية الدولية من خلال المجالس التنسيقية واللجان المشتركة.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">التنسيق الكامل لأعمال المجالس واللجان والجهات والمنظمات الإقليمية والدولية.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">متابعة أعمال المجالس واللجان والجهات والمنظمات الإقليمية والدولية وأرشفة قراراتها ومحاضرها، والرفع بالتقارير المتعلقة بأعمالها ونتائجها وتوصياتها.</span></div>
+        <div class="task-item"><span class="task-num">13</span><span class="task-text">التنسيق مع قطاعات الوزارة فيما يخص دراسة الملفات والأعمال ذات الشأن التعليمي التي تعرض في المجالس واللجان والجهات والمنظمات الإقليمية والدولية.</span></div>
+        <div class="task-item"><span class="task-num">14</span><span class="task-text">تقديم المقترحات المستقبلية للزيارات الدولية ومستويات التمثيل المستهدفة لها.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الإدارة العامة للمنظمات الدولية -->
+  <div class="obj-card" id="obj-intl-org">
+    <div class="obj-top" onclick="toggleObj('obj-intl-org')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">الإدارة العامة للمنظمات الدولية</div>
+        <div class="obj-goal">تعزيز العلاقة مع المنظمات الدولية والإقليمية والمنظمات غير الربحية ذات العلاقة بالتعليم ومجموعات التعليم الدولية عبر القنوات الدبلوماسية.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد معايير الترشيح للكفاءات السعودية للعمل والمشاركة في المنظمات الإقليمية والدولية، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">تعزيز علاقة الوزارة وقطاعاتها مع المنظمات الدولية (مثل: منظمة اليونسكو، ومنظمة التعاون والتنمية الاقتصادية).</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">تمثيل الوزارة لدى مجموعات التعليم الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تمثيل الوزارة في اللجنة الوطنية للتربية والثقافة والعلوم والمنظمات الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">تعزيز علاقة الوزارة مع المنظمات غير الربحية الدولية والمشاركة في مجموعات التعليم الدولية.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">تزويد المنظمات الدولية ذات العلاقة بالتقارير التي تصدرها الوزارة بالتنسيق مع القطاعات والجهات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">دراسة التقارير والوثائق الواردة من المنظمات الإقليمية والدولية بالتنسيق مع الجهات ذات العلاقة بالوزارة، والرفع بالتوصيات/الملاحظات حيالها.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التنسيق والمشاركة في زيارات واجتماعات الوفود الدولية مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">تمثيل الوزارة في اللجان والمؤتمرات المنظمة مع الجهات ذات العلاقة فيما يخص المنظمات التعليمية غير الربحية دولياً.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">المشاركة في الفعاليات المتعلقة بالمنظمات التعليمية غير الربحية والفرص المرتبطة بها، ذات العلاقة بخدمات قطاع التعليم والمجالات المرتبطة به.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">تأطير العمل مع المنظمات الدولية غير الربحية، ووضع الضوابط والمعايير ذات العلاقة به.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">تقديم المقترحات المتعلقة بالشراكات والاتفاقات الخاصة بالوزارة مع المنظمات غير الربحية الدولية، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">13</span><span class="task-text">إبراز دور الوزارة والقطاعات المرتبطة بها في الجانب غير الربحي مع المنظمات ذات العلاقة دولياً، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">14</span><span class="task-text">متابعة قرارات المؤتمرات الدولية والإقليمية المتخصصة بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-title" style="margin-top:30px;margin-bottom:6px">مهام الإدارات والوحدات التابعة كما وردت في الدليل</div>
+  <p class="page-sub" style="margin-bottom:18px">تفصيل مهام الإدارات الفرعية والوحدات المرتبطة بكل إدارة عامة.</p>
+
+  <div class="obj-card sub-unit-card" id="obj-attache-affairs">
+    <div class="obj-top" onclick="toggleObj('obj-attache-affairs')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">شؤون الملحقين الثقافيين والموفدين</div>
+        <div class="obj-goal">إدارة شؤون الملحقين الثقافيين والموفدين، وإعداد لائحة الإيفاد، ومعايير تقويم الأداء، ومتابعة قرارات الإيفاد.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد مشروع لائحة الإيفاد للملحقيات بالتنسيق مع وكالة الشؤون القانونية والسياسات ووكالة الموارد البشرية، ومتابعة اعتمادها من جهات الاختصاص.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">اقتراح ضوابط ومعايير لتقويم الأداء للملحقين الثقافيين وقيادات الملحقية.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تنسيق الجهود المشتركة بين الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">التنسيق فيما يخص تهيئة الموظفين الموفدين مع القطاعات ذات العلاقة في الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">متابعة قرارات إيفاد الملاحق والموظفين للعمل بالملحقيات الثقافية بعد صدور الموافقات اللازمة.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-attache-performance">
+    <div class="obj-top" onclick="toggleObj('obj-attache-performance')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">دعم أداء الملحقيات الثقافية</div>
+        <div class="obj-goal">دعم أعمال الملحقيات الثقافية، وتلبية احتياجاتها والتواصل مع الملحقيات والإدارات المعنية في الوزارة.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">تسجيل التقارير المتعلقة بأداء الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">التنسيق مع وزارة الخارجية والسفارات ذات العلاقة فيما يخص شؤون الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تعزيز تبادل أفضل الممارسات بين الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">الاتصال الدائم بالملحقيات الثقافية لبحث الشؤون الإدارية.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">متابعة تقارير ومؤشرات أداء الملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">متابعة الأعمال ذات العلاقة بين الوزارة والملحقيات الثقافية.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التواصل مع الملحقيات الثقافية ومسؤولي الوزارة لعقد اجتماعات وورش عمل مشتركة ووضع الجدول الزمني لهذه الاجتماعات والورش حسب الضرورة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">التنسيق مع الإدارة العامة للمراجعة الداخلية حيال ملاحظات الجهات الرقابية فيما يخص الملحقيات الثقافية وموظفيها ومتابعة معالجتها.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-visits-delegations">
+    <div class="obj-top" onclick="toggleObj('obj-visits-delegations')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">إدارة الزيارات والوفود الدولية</div>
+        <div class="obj-goal">توحيد العلاقة بين الوزارة ونظيراتها في الدول الأخرى، والمساهمة في تعزيز صورة الوزارة، وتحقيق مشاركات فاعلة ومثمرة في المؤتمرات والفعاليات الدولية ذات العلاقة.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية، ومتابعة تنفيذها بعد اعتمادها، والعمل على تطويرها.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">ترتيب المقابلات والزيارات الخارجية للوزير وزيارات الوفود التعليمية والطلابية الرسمية والأجنبية للمملكة، بالتنسيق مع الجهات والقطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">طلب استخراج التأشيرات الحكومية للوفود والخبراء الأجانب لعقد لقاءات مع مسؤولي الوزارة.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">إعداد ملف مفصل عن الضيف الزائر لمعالي الوزير وتسليمه لمكتب معاليه قبل الزيارة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">تقديم المقترحات المستقبلية للزيارات الدولية ومستويات التمثيل المستهدفة لها.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-relations-councils">
+    <div class="obj-top" onclick="toggleObj('obj-relations-councils')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">إدارة دعم العلاقات والمجالس واللجان التنسيقية الدولية</div>
+        <div class="obj-goal">دعم تفعيل الوزارة ومشاركتها في المؤتمرات والفعاليات الدولية ذات العلاقة.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">متابعة تنفيذ بنود الشراكات والاتفاقات وقرارات المؤتمرات الدولية والإقليمية في مجال الاختصاص، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">دعم أنشطة تمثيل الوزارة في المعارض والمؤتمرات والفعاليات الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">المشاركة مع الجهات الحكومية فيما يتعلق بتمثيل مصالح الوزارة حيال الشراكات الدولية.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">متابعة المساعدات التعليمية الدولية المقدمة من حكومة المملكة العربية السعودية بالتنسيق مع الجهات والقطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">الرد على الاستفسارات التي ترد من وزارة الخارجية والملحقيات الثقافية السعودية بالخارج فيما يتعلق بالوثائق التعليمية الصادرة من المملكة، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">إعداد خطة للتعاون مع المؤسسات التعليمية الدولية من خلال اللجان المشتركة والمجالس التنسيقية دولياً.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">التنسيق الكامل لأعمال المجالس واللجان والجهات والمنظمات الإقليمية والدولية.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">متابعة أعمال المجالس واللجان والجهات والمنظمات الإقليمية والدولية وأرشفة قراراتها ومحاضرها، والرفع بالتقارير المتعلقة بأعمالها ونتائجها وتوصياتها.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">التنسيق مع قطاعات الوزارة فيما يخص دراسة الملفات والأعمال ذات الشأن التعليمي التي تعرض في المجالس واللجان والجهات والمنظمات الإقليمية والدولية.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-edu-groups">
+    <div class="obj-top" onclick="toggleObj('obj-edu-groups')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">المنظمات ومجموعات التعليم الدولية</div>
+        <div class="obj-goal">تعزيز العلاقة مع المنظمات الدولية والإقليمية والمنظمات غير الربحية ذات العلاقة بالتعليم ومجموعات التعليم الدولية عبر القنوات الدبلوماسية.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">إعداد معايير الترشيح للكفاءات السعودية للعمل والمشاركة في المنظمات الإقليمية والدولية، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">تمثيل الوزارة إقليمياً ودولياً في المنظمات ذات العلاقة بما يحقق مستهدفات الوزارة ورؤيتها، ومنفعة الطالب المدرسي، ومنفعة المواطن، ومنفعة القطاع الخاص والمجتمع المدني ذات العلاقة بالتعليم.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">تمثيل الوزارة لدى مجموعات التعليم الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تمثيل الوزارة في اللجنة الوطنية للتربية والثقافة والعلوم والمنظمات الدولية ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">تمثيل الوزارة في المنظمات الدولية غير الربحية.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">تعزيز العلاقات الدولية ذات العلاقة بالتعليم والمؤسسات الدولية التي تخدم التعليم بالوزارة، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">دراسة التقارير والوثائق الواردة من المنظمات الإقليمية والدولية بالتنسيق مع الجهات ذات العلاقة بالوزارة، والرفع بالتوصيات/الملاحظات حيالها.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التنسيق والمشاركة في زيارات واجتماعات الوفود الدولية مع المنظمات ذات العلاقة.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-nonprofit-orgs">
+    <div class="obj-top" onclick="toggleObj('obj-nonprofit-orgs')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">المنظمات الدولية غير الربحية</div>
+        <div class="obj-goal">تعزيز العلاقة مع المنظمات الدولية غير الربحية والمنظمات غير الهادفة للربح ومجموعات التعليم الدولية عبر القنوات الدبلوماسية.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">تمثيل الوزارة في المنظمات التعليمية غير الربحية الدولية.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">تمثيل الوزارة في اللجان والمؤتمرات المنظمة مع الجهات ذات العلاقة فيما يخص المنظمات التعليمية غير الربحية دولياً.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">المشاركة في الفعاليات المتعلقة بالمنظمات التعليمية غير الربحية والفرص المرتبطة بها ذات العلاقة بخدمات قطاع التعليم والمجالات المرتبطة به.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">تأطير العمل مع المنظمات الدولية غير الربحية، ووضع الضوابط والمعايير الخاصة ذات العلاقة به.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">تقديم المقترحات المتعلقة بالشراكات والاتفاقات الخاصة بالوزارة مع المنظمات غير الربحية الدولية، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">إبراز دور الوزارة والقطاعات المرتبطة بها في الجانب غير الربحي مع المنظمات ذات العلاقة دولياً، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-cultural-linkage">
+    <div class="obj-top" onclick="toggleObj('obj-cultural-linkage')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">إدارة الارتباط الثقافي</div>
+        <div class="obj-goal">رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتهيئة احتياجاتهم وحل مشكلاتهم، وتعزيز التواصل الثقافي مع هذه الدول والتواصل التعليمي بين الجامعات الحكومية والخاصة في المملكة ونظيراتها في هذه الدول.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">نشر الثقافة السعودية في الدول ضمن اختصاص الإدارة وتعزيز دور الطالب السعودي كأحد عناصر القوة الناعمة للمملكة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">رعاية المبتعثين ومعالجة مشكلاتهم في دول الابتعاث ضمن اختصاص الإدارة، بالتنسيق مع مركز خدمات الابتعاث.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">تقديم الدعم للطلاب السعوديين الدارسين على حسابهم الخاص وتقديم المشورة لهم والرد على استفساراتهم من خلال وحدات الارتباط الثقافي في هذه الدول.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">المشاركة في تنظيم المعارض الثقافية ومعارض الكتاب في الدول ضمن اختصاص الإدارة، بالتعاون مع الجهات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">التعاون مع إدارات المدارس السعودية في الخارج وتقديم الخدمات المتعلقة بذلك.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">تعزيز العلاقات مع المؤسسات المحلية في بلد الملحقية ضمن اختصاص الإدارة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">تزويد الجامعات المحلية والجهات الأخرى بنتائج مبتعثيها بشكل دوري، بالتنسيق مع مركز خدمات الابتعاث.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التسويق للمنح الدراسية السعودية خارج المملكة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">استقطاب فروع الجامعات الخارجية بالتنسيق مع وكالة الاستثمار.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">الإشراف على الأندية الطلابية بالخارج وتوعيتها وإرشادها فيما يخص الكوارث.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">التأكد من محافظة الطلبة على الهوية الوطنية والتزامهم بالسلوك المناسب مع مراعاة أنظمة المملكة وبلد الابتعاث، ورسم الصورة الحسنة عنهم وعن بلدهم.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">متابعة أوضاع الطلاب الدراسية ضمن تخصصية إدارة الارتباط الثقافي.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj-card sub-unit-card" id="obj-international-linkage">
+    <div class="obj-top" onclick="toggleObj('obj-international-linkage')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">إدارة الارتباط الدولي</div>
+        <div class="obj-goal">تعزيز شركات الوزارة الاستراتيجية مع الشركاء والجهات الأخرى الدولية، وخاصة الاتفاقات ومذكرات التفاهم، بما يحقق مصلحة العملية التعليمية وأهداف الوزارة الاستراتيجية.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">متابعة الالتزام بالمعايير والضوابط والنماذج ومنهجية العمل بالتعاون مع إدارات الملحقيات بعد اعتمادها، ودراسة محاضرها أو محاضر رسمية معتمدة لهذا الخصوص، ودراسة التحديثات والمستجدات ذات الأهمية، والرفع بالتوصيات التطويرية والتحسينية لقيادة الملحقية وتطوير القرار لديها، بالتنسيق مع الجهات والقطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">متابعة وتجميع التقارير في مجالات الارتباط الدولي لدعم شركات الوزارة والجهات ذات العلاقة، وفق المؤشرات الرسمية المعتمدة لها، وتحليل الأثر المتحقق من تنفيذها بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">التنسيق مع قطاعات الوزارة لدراسة الموضوعات ذات العلاقة بالشركات الدولية، والارتباط بها في مجال عملها، وما يتم إحالته من صاحب الصلاحية.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">متابعة تقارير التقييم ذات العلاقة لأغراض بناء الشراكات والاتفاقيات ومذكرات التفاهم والارتباط بها، وارتباطها بالمؤشرات الوطنية ذات العلاقة، بما يحقق أهداف الوزارة وأدوارها وممكناتها ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">اقتراح برامج ومبادرات الجودة لجذب الطلبة والموهوبين من ذوي الكفاءات، ذات العلاقة بالاتفاقيات وأداء تنفيذ كل بنودها وقياس أثرها، مثل: زيادة الجامعات والمنظمات الدولية، والتنسيق في الخدمات التابعة حسب مجالها.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">تنظيم فعاليات الوزارة فيما يتعلق بأعمال الإدارة، والاتفاقات، والشراكات مع الدول والمنظمات المختلفة.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">التنسيق مع الوزارة أو الجهات ذات العلاقة في تنفيذ البرامج والسياسات والممكنات ذات العلاقة دولياً، بالتنسيق مع القطاعات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">إعداد مسودة المحتوى الإعلامي في مجال الاختصاص، بالتنسيق مع الإدارة العامة للاتصال المؤسسي.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الملحقيات الثقافية -->
+  <div class="obj-card" id="obj-att">
+    <div class="obj-top" onclick="toggleObj('obj-att')">
+      <span class="obj-icon"></span>
+      <div>
+        <div class="obj-label">الملحقيات الثقافية</div>
+        <div class="obj-goal">رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتلبية احتياجاتهم وحل مشاكلهم، وتعزيز التواصل الثقافي مع الدول الأخرى.</div>
+      </div>
+      <span class="obj-toggle">▼</span>
+    </div>
+    <div class="obj-tasks">
+      <div class="tasks-body">
+        <div class="task-item"><span class="task-num">1</span><span class="task-text">نشر الثقافة السعودية بالخارج وتعزيز دور الطالب السعودي كأحد عناصر القوة الناعمة للمملكة.</span></div>
+        <div class="task-item"><span class="task-num">2</span><span class="task-text">رعاية المبتعثين ومعالجة مشكلاتهم في دول الابتعاث حسب اختصاصها، وبالتنسيق مع مركز خدمات الابتعاث.</span></div>
+        <div class="task-item"><span class="task-num">3</span><span class="task-text">تقديم الدعم للطلاب السعوديين الدارسين على حسابهم الخاص وتقديم المشورة والرد على الاستفسارات.</span></div>
+        <div class="task-item"><span class="task-num">4</span><span class="task-text">المشاركة في تنظيم المعارض الثقافية ومعارض الكتاب بالتعاون مع الجهات ذات العلاقة.</span></div>
+        <div class="task-item"><span class="task-num">5</span><span class="task-text">التعاون مع إدارات المدارس السعودية بالخارج وتقديم الخدمات المتعلقة بذلك.</span></div>
+        <div class="task-item"><span class="task-num">6</span><span class="task-text">تعزيز العلاقات مع المؤسسات المحلية في بلد الملحقية في مجال اختصاصها.</span></div>
+        <div class="task-item"><span class="task-num">7</span><span class="task-text">تزويد الجامعات المحلية والجهات الأخرى بنتائج مبتعثيها بشكل دوري، بالتنسيق مع مركز خدمات الابتعاث.</span></div>
+        <div class="task-item"><span class="task-num">8</span><span class="task-text">التسويق للمنح الدراسية السعودية خارج المملكة.</span></div>
+        <div class="task-item"><span class="task-num">9</span><span class="task-text">استقطاب فروع الجامعات الخارجية بالتنسيق مع وكالة الاستثمار.</span></div>
+        <div class="task-item"><span class="task-num">10</span><span class="task-text">الإشراف على الأندية الطلابية بالخارج وتوعية منسوبيها وإرشادهم فيما يخص الكوارث.</span></div>
+        <div class="task-item"><span class="task-num">11</span><span class="task-text">التأكد من محافظة الطلبة على الهوية الوطنية والتزامهم بالسلوك المناسب مع مراعاة أنظمة المملكة وبلد الابتعاث ورسم الصورة الحسنة عنهم وعن بلدهم.</span></div>
+        <div class="task-item"><span class="task-num">12</span><span class="task-text">متابعة أوضاع الطلاب الدراسية ضمن تخصصية الملحقيات الثقافية.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: UNITS
+═══════════════════════════════════════════════ -->
+<div id="units" class="section">
+  <div class="breadcrumb">
+    <span>وكالة التعاون الدولي</span>
+    <span class="sep">›</span>
+    <span>الوحدات التنظيمية</span>
+  </div>
+  <div class="page-title">الوحدات التنظيمية للوكالة</div>
+  <p class="page-sub">نظرة تفصيلية على كل وحدة مع هدفها وتصنيفها التنظيمي</p>
+
+  <div class="cards-grid" style="margin-top:22px">
+    <div class="card">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">وكالة التعاون الدولي</div>
+        <div class="card-desc"><strong>التصنيف:</strong> وكالة<br><strong>الارتباط:</strong> نائب الوزير<br><strong>المستوى:</strong> الثالث</div>
+        <span class="card-tag">وكالة – م3</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent teal"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">مكتب الوكيل</div>
+        <div class="card-desc">يضم: الاتصالات الإدارية، المستشارين، السكرتارية. يعمل على إدارة المعاملات وتقديم الدعم الاستشاري للوكيل وتمثيل الوكالة في اللجان.</div>
+        <span class="card-tag">مكتب – م4</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent teal"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">أمانة الملحقيات الثقافية</div>
+        <div class="card-desc">تضم: شؤون الملحقين الثقافيين والموفدين، دعم أداء الملحقيات الثقافية. تسهيل أعمال الملحقيات الثقافية وتلبية احتياجاتها.</div>
+        <span class="card-tag">أمانة – م4</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الإدارة العامة للعلاقات الدولية</div>
+        <div class="card-desc">تضم: إدارة الزيارات والوفود الدولية، وإدارة دعم العلاقات والمجالس واللجان التنسيقية الدولية. وتشمل ضمنها وحدات العلاقات الدولية، والمجالس واللجان، والمبادرات والمتابعة، والمعرفة والتوثيق، والتقارير التنفيذية.</div>
+        <span class="card-tag">إدارة عامة – م4</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent green"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الإدارة العامة للمنظمات الدولية</div>
+        <div class="card-desc">تضم: منظمات ومجموعات التعليم الدولية، المنظمات الدولية غير الربحية. تعزيز علاقة الوزارة مع المنظمات الدولية عبر القنوات الدبلوماسية.</div>
+        <span class="card-tag">إدارة عامة – م4</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-accent purple"></div>
+      <div class="card-body">
+        <div class="card-icon"></div>
+        <div class="card-title">الملحقيات الثقافية</div>
+        <div class="card-desc">تضم: إدارة الارتباط الثقافي، إدارة الارتباط الدولي. رعاية الطلبة السعوديين بالخارج وتعزيز الحضور الثقافي السعودي دولياً.</div>
+        <span class="card-tag">ملحقيات – م4</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Shared commitments -->
+  <div class="page-title" style="margin-bottom:8px">الارتباطات التنسيقية للوكالة</div>
+  <p class="page-sub" style="margin-bottom:18px">الجهات التي تتنسق معها وكالة التعاون الدولي داخل الوزارة</p>
+  <div class="tasks-body" style="border-radius:10px;border:1px solid var(--border)">
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>وكالة الشؤون القانونية والسياسات</strong> – مراجعة الاتفاقيات ومذكرات التعاون والعقود التي تبرمها الوزارة مع الجهات الدولية.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>وكالة الموارد البشرية</strong> – لائحة الإيفاد للملحقيات وشؤون الموظفين الموفدين.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>وكالة التخطيط</strong> – مؤشرات الأداء ومتابعة الخطط التشغيلية والاستراتيجية.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>الإدارة العامة للشراكات والاتفاقات</strong> – إعداد أطر اتفاقيات المنح الدراسية والشراكات الدولية.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>وكالة الاستثمار</strong> – استقطاب فروع الجامعات الأجنبية في المملكة.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>مركز خدمات الابتعاث</strong> – التنسيق في شؤون المبتعثين ومتابعة أوضاعهم الأكاديمية.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>الإدارة العامة للاتصال المؤسسي</strong> – تنظيم استقبال وحضور ضيوف الوزارة من الوفود الدولية.</span></div>
+    <div class="task-item"><span class="task-num" style="background:var(--teal);color:#fff">◉</span><span class="task-text"><strong>وزارة الخارجية</strong> – التنسيق في شؤون الملحقيات الثقافية والرد على استفساراتها.</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SECTION: SEARCH
+═══════════════════════════════════════════════ -->
+<div id="search" class="section">
+  <div class="page-title"> بحث في دليل الوكالة</div>
+  <p class="page-sub" style="margin-bottom:18px">ابحث في مهام ومسؤوليات وكالة التعاون الدولي وجميع وحداتها</p>
+
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="ابحث عن مهمة أو مسؤولية أو وحدة تنظيمية..." oninput="doSearch(this.value)" id="searchInput">
+    <span class="search-icon"></span>
+  </div>
+  <div id="searchResults"></div>
+</div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════ -->
+
+<!-- Modal: وكالة التعاون الدولي -->
+<div id="modal-agency" class="modal-overlay" onclick="closeModalClick(event,'modal-agency')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-agency')">✕</button>
+      <h3> وكالة التعاون الدولي</h3>
+      <p>الهدف والمهام العامة – الدليل التنظيمي ص 110</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;line-height:1.75;color:var(--slate);background:var(--light);padding:14px 16px;border-radius:8px;margin-bottom:18px"><strong style="color:var(--navy)">الهدف:</strong> تعزيز العلاقة بين الوزارة ونظيراتها والمنظمات والجهات الدولية ذات العلاقة بأعمال الوزارة وتنفيذ أهداف وسياسات الوزارة في مجالات الملحقيات الثقافية.</p>
+      <p style="font-weight:700;margin-bottom:10px;color:var(--navy)">الوحدات التنظيمية التابعة (34 وحدة)</p>
+      <ul style="list-style:none;font-size:13.5px;color:var(--slate);line-height:2">
+        <li> مكتب الوكيل</li>
+        <li> أمانة الملحقيات الثقافية</li>
+        <li> الإدارة العامة للعلاقات الدولية</li>
+        <li> الإدارة العامة للمنظمات الدولية</li>
+        <li> الملحقيات الثقافية</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: أمانة الملحقيات -->
+<div id="modal-attaché" class="modal-overlay" onclick="closeModalClick(event,'modal-attaché')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-attaché')">✕</button>
+      <h3> أمانة الملحقيات الثقافية</h3>
+      <p>الدليل التنظيمي ص 113–115</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;line-height:1.75;color:var(--slate);background:var(--light);padding:14px 16px;border-radius:8px;margin-bottom:18px"><strong style="color:var(--navy)">الهدف:</strong> تسهيل أعمال الملحقيات الثقافية، وتلبية احتياجاتها والتواصل مع الملحقيات والإدارات المعنية في الوزارة.</p>
+      <p style="font-weight:700;margin-bottom:10px">الوحدات الفرعية:</p>
+      <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13.5px;line-height:2;color:var(--navy);margin-bottom:16px">
+        👨‍ <strong>شؤون الملحقين الثقافيين والموفدين</strong><br>
+        &nbsp;&nbsp;&nbsp;→ إعداد لائحة الإيفاد · معايير تقويم الأداء · متابعة قرارات الإيفاد<br><br>
+         <strong>دعم أداء الملحقيات الثقافية</strong><br>
+        &nbsp;&nbsp;&nbsp;→ التنسيق الدائم · متابعة مؤشرات الأداء · تعزيز أفضل الممارسات
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: العلاقات الدولية -->
+<div id="modal-intl-rel" class="modal-overlay" onclick="closeModalClick(event,'modal-intl-rel')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-intl-rel')">✕</button>
+      <h3> الإدارة العامة للعلاقات الدولية</h3>
+      <p>الدليل التنظيمي ص 117–119</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;line-height:1.75;color:var(--slate);background:var(--light);padding:14px 16px;border-radius:8px;margin-bottom:18px"><strong style="color:var(--navy)">الهدف:</strong> توطيد العلاقة بين الوزارة ونظيراتها في الدول الأخرى، والمساهمة في تعزيز صورة الوزارة دولياً، وتحقيق مشاركات فاعلة ومثمرة في المؤتمرات والفعاليات الدولية.</p>
+      <p style="font-weight:700;margin-bottom:10px">الإدارات الفرعية:</p>
+      <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13.5px;line-height:2;color:var(--navy)">
+         <strong>الزيارات والوفود الدولية</strong><br>
+        &nbsp;&nbsp;&nbsp;→ ترتيب زيارات الوزير · تأشيرات الوفود الأجنبية · ملفات الضيوف<br><br>
+        <strong>إدارة دعم العلاقات والمجالس واللجان التنسيقية الدولية</strong><br>
+        &nbsp;&nbsp;&nbsp;→ العلاقات الدولية · المجالس واللجان · المبادرات والمتابعة · المعرفة والتوثيق · التقارير التنفيذية
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: المنظمات الدولية -->
+<div id="modal-intl-org" class="modal-overlay" onclick="closeModalClick(event,'modal-intl-org')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-intl-org')">✕</button>
+      <h3> الإدارة العامة للمنظمات الدولية</h3>
+      <p>الدليل التنظيمي ص 120–121</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;line-height:1.75;color:var(--slate);background:var(--light);padding:14px 16px;border-radius:8px;margin-bottom:18px"><strong style="color:var(--navy)">الهدف:</strong> تعزيز العلاقة مع المنظمات الدولية والإقليمية والمنظمات غير الربحية ذات العلاقة بالتعليم عبر القنوات الدبلوماسية.</p>
+      <p style="font-weight:700;margin-bottom:10px">الأقسام الفرعية:</p>
+      <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13.5px;line-height:2;color:var(--navy)">
+         <strong>منظمات ومجموعات التعليم الدولية</strong><br>
+        &nbsp;&nbsp;&nbsp;→ اليونسكو · OECD · مجموعات التعليم الدولية · اللجنة الوطنية للتربية والثقافة<br><br>
+         <strong>المنظمات الدولية غير الربحية</strong><br>
+        &nbsp;&nbsp;&nbsp;→ تأطير العمل مع المنظمات غير الربحية · الضوابط والمعايير · الشراكات والاتفاقات
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: الملحقيات الثقافية -->
+<div id="modal-attachments" class="modal-overlay" onclick="closeModalClick(event,'modal-attachments')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-attachments')">✕</button>
+      <h3> الملحقيات الثقافية</h3>
+      <p>الدليل التنظيمي ص 116</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;line-height:1.75;color:var(--slate);background:var(--light);padding:14px 16px;border-radius:8px;margin-bottom:18px"><strong style="color:var(--navy)">الهدف:</strong> رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتلبية احتياجاتهم وحل مشاكلهم، وتعزيز التواصل الثقافي مع الدول الأخرى، والتعليمي بين الجامعات الحكومية والخاصة ونظيراتها في الخارج.</p>
+      <p style="font-weight:700;margin-bottom:10px">إدارات الارتباط:</p>
+      <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13.5px;line-height:2;color:var(--navy)">
+         <strong>إدارة الارتباط الثقافي</strong><br>
+        &nbsp;&nbsp;&nbsp;→ نشر الثقافة السعودية · دعم الطلاب · التعاون مع المدارس السعودية بالخارج<br><br>
+         <strong>إدارة الارتباط الدولي</strong><br>
+        &nbsp;&nbsp;&nbsp;→ استقطاب الجامعات الأجنبية · التسويق للمنح السعودية · الأندية الطلابية
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: مكتب الوكيل -->
+<div id="modal-office" class="modal-overlay" onclick="closeModalClick(event,'modal-office')">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal('modal-office')">✕</button>
+      <h3> مكتب وكيل التعاون الدولي</h3>
+      <p>الدليل التنظيمي ص 112</p>
+    </div>
+    <div class="modal-body">
+      <p style="font-weight:700;margin-bottom:12px">الوحدات الفرعية للمكتب:</p>
+      <div style="display:grid;gap:12px">
+        <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.8">
+          <strong style="color:var(--navy)"> الاتصالات الإدارية</strong><br>
+          إدارة جميع المعاملات (وارد وصادر) المرسلة إلى/من الوكيل ومعالجتها · أرشفة وحفظ الوثائق والتعاميم · إدارة عمليات التحرير والنسخ
+        </div>
+        <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.8">
+          <strong style="color:var(--navy)"> المستشارون</strong><br>
+          تقديم المشورة المستقلة والمحايدة للوكيل · دراسة الموضوعات المحالة · تمثيل الوكالة في اللجان الدائمة والمؤقتة · دعم مراجعة المعاملات ذات الطابع القانوني والإداري
+        </div>
+        <div style="background:var(--light);border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.8">
+          <strong style="color:var(--navy)"> السكرتارية</strong><br>
+          تلقي المكالمات الواردة · جدولة الاجتماعات · التنسيق مع الإدارات ذات العلاقة للإعداد للاجتماعات · تحرير وطباعة الخطابات الرسمية · إعداد وطباعة العروض والمقترحات
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCRIPT ═══ -->
+<script>
+// NAV
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// MODALS
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalClick(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+
+// ORG TREE
+function toggleOrg(node) {
+  const next = node.nextElementSibling;
+  if (!next || !next.classList.contains('org-children')) return;
+  const open = next.classList.contains('open');
+  next.classList.toggle('open', !open);
+  node.classList.toggle('open', !open);
+}
+
+// OBJ ACCORDION
+function toggleObj(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  const toggle = el.querySelector('.obj-toggle');
+  toggle.textContent = el.classList.contains('open') ? '▲' : '▼';
+}
+
+// SEARCH
+const allTasks = [
+  { unit: 'وكالة التعاون الدولي', tasks: [
+    'إعداد وتحديث سياسات الملحقيات الثقافية في تمثيل المملكة ثقافياً ودعم مبتعثيها والرقابة على تنفيذها',
+    'إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية',
+    'إعداد خطة للتعاون مع المؤسسات التعليمية الدولية من خلال اللجان المشتركة والمجالس التنسيقية',
+    'إبراز المكانة العلمية والمعرفية للمملكة العربية السعودية',
+    'تمثيل الوزارة في المنظمات والمحافل والمجالس واللجان والمجموعات الدولية',
+    'التنسيق والترتيب للمقابلات والزيارات الخارجية للوزير',
+    'تطوير وتعزيز الاتفاقات المتعلقة بالمنح الدراسية المقدمة من الدول الأجنبية',
+    'التنسيق والترتيب للقاءات الوزير بسفراء الممثليات الأجنبية',
+    'التنسيق لمشاركة الوزارة في المؤتمرات والمعارض الدولية',
+    'تعزيز استفادة المملكة من عضويتها في المنظمات الدولية والإقليمية المتخصصة',
+    'متابعة تنفيذ قرارات المؤتمرات الإقليمية والدولية المتخصصة',
+    'الإشراف على المعارض والمؤتمرات والفعاليات الدولية التي تشارك فيها الوزارة',
+    'تسهيل أعمال الملحقيات الثقافية وتلبية احتياجاتها',
+    'رعاية الطلبة السعوديين الدارسين في الخارج ومتابعتهم وتلبية احتياجاتهم'
+  ]},
+  { unit: 'أمانة الملحقيات الثقافية', tasks: [
+    'إعداد مشروع لائحة الإيفاد للملحقيات',
+    'اقتراح ضوابط ومعايير لتقويم الأداء للملحقين الثقافيين',
+    'التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها',
+    'تنسيق الجهود المشتركة بين الملحقيات الثقافية',
+    'التنسيق بين الوزارة ووزارة الخارجية فيما يعنى بشؤون الملحقيات',
+    'تعزيز تبادل أفضل الممارسات بين الملحقيات الثقافية',
+    'متابعة تقارير مؤشرات أداء الملحقيات الثقافية',
+    'متابعة قرارات إيفاد الملاحق والموظفين للعمل بالملحقيات',
+    'التواصل مع الملحقيات لترتيب اجتماعات وورش عمل مشتركة'
+  ]},
+  { unit: 'الإدارة العامة للعلاقات الدولية', tasks: [
+    'إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية',
+    'ترتيب المقابلات والزيارات الخارجية للوزير وزيارات الوفود التعليمية',
+    'طلب استخراج التأشيرات الحكومية للوفود والخبراء الأجانب',
+    'إعداد ملف مفصل عن الضيف الزائر لمعالي الوزير',
+    'متابعة تنفيذ بنود الشراكات والاتفاقات وقرارات المؤتمرات الدولية',
+    'دعم أنشطة تمثيل الوزارة في المعارض والمؤتمرات والفعاليات الدولية',
+    'الرد على الاستفسارات الواردة من وزارة الخارجية',
+    'إعداد خطط للتعاون مع المؤسسات التعليمية الدولية من خلال المجالس التنسيقية',
+    'التنسيق الكامل لأعمال المجالس واللجان والمنظمات الإقليمية والدولية',
+    'أرشفة قرارات المجالس واللجان والمنظمات ومحاضرها'
+  ]},
+  { unit: 'الإدارة العامة للمنظمات الدولية', tasks: [
+    'إعداد معايير الترشيح للكفاءات السعودية للمنظمات الدولية',
+    'تعزيز علاقة الوزارة مع اليونسكو ومنظمة التعاون والتنمية الاقتصادية',
+    'تمثيل الوزارة لدى مجموعات التعليم الدولية',
+    'تمثيل الوزارة في اللجنة الوطنية للتربية والثقافة والعلوم',
+    'تعزيز علاقة الوزارة مع المنظمات غير الربحية الدولية',
+    'تزويد المنظمات الدولية بالتقارير الصادرة عن الوزارة',
+    'دراسة التقارير والوثائق الواردة من المنظمات الإقليمية والدولية',
+    'تأطير العمل مع المنظمات الدولية غير الربحية ووضع الضوابط والمعايير',
+    'تقديم المقترحات المتعلقة بالشراكات مع المنظمات غير الربحية الدولية',
+    'متابعة قرارات المؤتمرات الدولية والإقليمية المتخصصة'
+  ]},
+
+  { unit: 'شؤون الملحقين الثقافيين والموفدين', tasks: [
+    'إعداد مشروع لائحة الإيفاد للملحقيات بالتنسيق مع وكالة الشؤون القانونية والسياسات ووكالة الموارد البشرية ومتابعة اعتمادها',
+    'اقتراح ضوابط ومعايير لتقويم الأداء للملحقين الثقافيين وقيادات الملحقية',
+    'التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها',
+    'تنسيق الجهود المشتركة بين الملحقيات الثقافية',
+    'التنسيق فيما يخص تهيئة الموظفين الموفدين مع القطاعات ذات العلاقة',
+    'متابعة قرارات إيفاد الملاحق والموظفين للعمل بالملحقيات الثقافية'
+  ]},
+  { unit: 'دعم أداء الملحقيات الثقافية', tasks: [
+    'التنسيق مع الملحقيات الثقافية وتلبية احتياجاتها',
+    'تسجيل التقارير المتعلقة بأداء الملحقيات الثقافية',
+    'التنسيق مع وزارة الخارجية والسفارات ذات العلاقة فيما يخص شؤون الملحقيات الثقافية',
+    'تعزيز تبادل أفضل الممارسات بين الملحقيات الثقافية',
+    'الاتصال الدائم بالملحقيات الثقافية لبحث الشؤون الإدارية',
+    'متابعة تقارير ومؤشرات أداء الملحقيات الثقافية',
+    'متابعة الأعمال ذات العلاقة بين الوزارة والملحقيات الثقافية',
+    'التواصل مع الملحقيات ومسؤولي الوزارة لعقد اجتماعات وورش عمل مشتركة',
+    'التنسيق مع المراجعة الداخلية حيال ملاحظات الجهات الرقابية فيما يخص الملحقيات الثقافية'
+  ]},
+  { unit: 'إدارة الزيارات والوفود الدولية', tasks: [
+    'إعداد السياسات والضوابط والبروتوكولات المتعلقة بالعلاقات الخارجية والزيارات الدولية',
+    'ترتيب المقابلات والزيارات الخارجية للوزير وزيارات الوفود التعليمية والطلابية الرسمية والأجنبية',
+    'طلب استخراج التأشيرات الحكومية للوفود والخبراء الأجانب',
+    'إعداد ملف مفصل عن الضيف الزائر لمعالي الوزير',
+    'تقديم المقترحات المستقبلية للزيارات الدولية ومستويات التمثيل المستهدفة'
+  ]},
+  { unit: 'إدارة دعم العلاقات والمجالس واللجان التنسيقية الدولية', tasks: [
+    'متابعة تنفيذ بنود الشراكات والاتفاقات وقرارات المؤتمرات الدولية والإقليمية',
+    'دعم أنشطة تمثيل الوزارة في المعارض والمؤتمرات والفعاليات الدولية',
+    'المشاركة مع الجهات الحكومية فيما يتعلق بتمثيل مصالح الوزارة حيال الشراكات الدولية',
+    'متابعة المساعدات التعليمية الدولية المقدمة من حكومة المملكة العربية السعودية',
+    'الرد على الاستفسارات الواردة من وزارة الخارجية والملحقيات الثقافية السعودية بالخارج',
+    'إعداد خطة للتعاون مع المؤسسات التعليمية الدولية من خلال اللجان المشتركة والمجالس التنسيقية',
+    'التنسيق الكامل لأعمال المجالس واللجان والجهات والمنظمات الإقليمية والدولية',
+    'متابعة أعمال المجالس واللجان وأرشفة قراراتها ومحاضرها والرفع بالتقارير',
+    'التنسيق مع قطاعات الوزارة فيما يخص دراسة الملفات والأعمال ذات الشأن التعليمي'
+  ]},
+  { unit: 'المنظمات ومجموعات التعليم الدولية', tasks: [
+    'إعداد معايير الترشيح للكفاءات السعودية للعمل والمشاركة في المنظمات الإقليمية والدولية',
+    'تمثيل الوزارة إقليمياً ودولياً في المنظمات ذات العلاقة',
+    'تمثيل الوزارة لدى مجموعات التعليم الدولية ذات العلاقة',
+    'تمثيل الوزارة في اللجنة الوطنية للتربية والثقافة والعلوم والمنظمات الدولية ذات العلاقة',
+    'تمثيل الوزارة في المنظمات الدولية غير الربحية',
+    'تعزيز العلاقات الدولية ذات العلاقة بالتعليم والمؤسسات الدولية التي تخدم التعليم بالوزارة',
+    'دراسة التقارير والوثائق الواردة من المنظمات الإقليمية والدولية والرفع بالتوصيات والملاحظات',
+    'التنسيق والمشاركة في زيارات واجتماعات الوفود الدولية مع المنظمات ذات العلاقة'
+  ]},
+  { unit: 'المنظمات الدولية غير الربحية', tasks: [
+    'تمثيل الوزارة في المنظمات التعليمية غير الربحية الدولية',
+    'تمثيل الوزارة في اللجان والمؤتمرات المنظمة مع الجهات ذات العلاقة فيما يخص المنظمات التعليمية غير الربحية',
+    'المشاركة في الفعاليات المتعلقة بالمنظمات التعليمية غير الربحية والفرص المرتبطة بها',
+    'تأطير العمل مع المنظمات الدولية غير الربحية ووضع الضوابط والمعايير الخاصة ذات العلاقة',
+    'تقديم المقترحات المتعلقة بالشراكات والاتفاقات الخاصة بالوزارة مع المنظمات غير الربحية الدولية',
+    'إبراز دور الوزارة والقطاعات المرتبطة بها في الجانب غير الربحي مع المنظمات ذات العلاقة دولياً'
+  ]},
+  { unit: 'إدارة الارتباط الثقافي', tasks: [
+    'نشر الثقافة السعودية وتعزيز دور الطالب السعودي كأحد عناصر القوة الناعمة للمملكة',
+    'رعاية المبتعثين ومعالجة مشكلاتهم في دول الابتعاث',
+    'تقديم الدعم للطلاب السعوديين الدارسين على حسابهم الخاص',
+    'المشاركة في تنظيم المعارض الثقافية ومعارض الكتاب',
+    'التعاون مع إدارات المدارس السعودية في الخارج',
+    'تعزيز العلاقات مع المؤسسات المحلية في بلد الملحقية',
+    'تزويد الجامعات المحلية والجهات الأخرى بنتائج مبتعثيها بشكل دوري',
+    'التسويق للمنح الدراسية السعودية خارج المملكة',
+    'استقطاب فروع الجامعات الخارجية بالتنسيق مع وكالة الاستثمار',
+    'الإشراف على الأندية الطلابية بالخارج',
+    'التأكد من محافظة الطلبة على الهوية الوطنية والسلوك المناسب',
+    'متابعة أوضاع الطلاب الدراسية ضمن تخصصية إدارة الارتباط الثقافي'
+  ]},
+  { unit: 'إدارة الارتباط الدولي', tasks: [
+    'متابعة الالتزام بالمعايير والضوابط والنماذج ومنهجية العمل بالتعاون مع إدارات الملحقيات',
+    'متابعة وتجميع التقارير في مجالات الارتباط الدولي لدعم شراكات الوزارة والجهات ذات العلاقة',
+    'التنسيق مع قطاعات الوزارة لدراسة الموضوعات ذات العلاقة بالشراكات الدولية',
+    'متابعة تقارير التقييم ذات العلاقة لبناء الشراكات والاتفاقيات ومذكرات التفاهم',
+    'اقتراح برامج ومبادرات الجودة لجذب الطلبة والموهوبين من ذوي الكفاءات',
+    'تنظيم فعاليات الوزارة المتعلقة بأعمال الإدارة والاتفاقات والشراكات',
+    'التنسيق مع الوزارة والجهات ذات العلاقة في تنفيذ البرامج والسياسات دولياً',
+    'إعداد مسودة المحتوى الإعلامي في مجال الاختصاص بالتنسيق مع الاتصال المؤسسي'
+  ]},
+  { unit: 'الملحقيات الثقافية', tasks: [
+    'نشر الثقافة السعودية بالخارج وتعزيز دور الطالب السعودي كقوة ناعمة',
+    'رعاية المبتعثين ومعالجة مشكلاتهم في دول الابتعاث',
+    'تقديم الدعم للطلاب السعوديين الدارسين على حسابهم الخاص',
+    'المشاركة في تنظيم المعارض الثقافية ومعارض الكتاب',
+    'التعاون مع إدارات المدارس السعودية بالخارج',
+    'تعزيز العلاقات مع المؤسسات المحلية في بلد الملحقية',
+    'التسويق للمنح الدراسية السعودية خارج المملكة',
+    'استقطاب فروع الجامعات الخارجية بالتنسيق مع وكالة الاستثمار',
+    'الإشراف على الأندية الطلابية بالخارج',
+    'متابعة أوضاع الطلاب الدراسية ضمن تخصصية الملحقيات'
+  ]}
+];
+
+function doSearch(q) {
+  const container = document.getElementById('searchResults');
+  if (!q || q.trim().length < 2) {
+    container.innerHTML = '<p style="color:var(--slate);font-size:13px;padding:12px 0">أدخل كلمتين على الأقل للبحث...</p>';
+    return;
+  }
+  const term = q.trim();
+  let html = '';
+  let total = 0;
+  allTasks.forEach(unit => {
+    const hits = unit.tasks.filter(t => t.includes(term));
+    if (hits.length === 0) return;
+    total += hits.length;
+    html += `<div style="margin-bottom:18px">
+      <div style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px;padding-bottom:6px;border-bottom:1.5px solid var(--border)">
+        📌 ${unit.unit}
+      </div>
+      <div class="tasks-body" style="border:1px solid var(--border);border-radius:8px">
+        ${hits.map((t,i) => `<div class="task-item"><span class="task-num">${i+1}</span><span class="task-text">${t.replace(new RegExp(term,'g'), '<mark>'+term+'</mark>')}</span></div>`).join('')}
+      </div>
+    </div>`;
+  });
+  if (total === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--slate)"><div style="font-size:40px"></div><p style="margin-top:12px">لا توجد نتائج لـ "<strong>'+term+'</strong>"</p></div>';
+  } else {
+    container.innerHTML = `<p style="font-size:12.5px;color:var(--slate);margin-bottom:14px">تم العثور على <strong>${total}</strong> نتيجة</p>${html}`;
+  }
+}
+
+// ESC to close modals
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
+</script>
+</body>
+</html>
