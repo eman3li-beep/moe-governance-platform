@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التصنيف الاستراتيجي للدول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#1B2A4A; --navy-light:#2A3F66; --gold:#B08D57; --teal:#2E7D6B;
+    --bg:#F6F5F1; --card:#FFFFFF; --border:#E3E0D8;
+    --high:#1B6B3A; --high-bg:#E4F0E8;
+    --med:#9C7A3C; --med-bg:#F3EDE3;
+    --low:#8A3A3A; --low-bg:#F3E4E4;
+    --text:#242832; --muted:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Tajawal', sans-serif; font-weight:400;
+  }
+  header{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color:#fff; padding:36px 28px 44px; position:relative; overflow:hidden;
+  }
+  header::before{
+    content:""; position:absolute; inset:0; opacity:.10;
+    background-image:
+      repeating-conic-gradient(from 0deg, transparent 0deg 11deg, rgba(255,255,255,.5) 11deg 11.6deg);
+    -webkit-mask-image: radial-gradient(circle at 88% 20%, black 0%, black 30%, transparent 62%);
+    mask-image: radial-gradient(circle at 88% 20%, black 0%, black 30%, transparent 62%);
+  }
+  .header-top{display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1; margin-bottom:18px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .moe-logo{width:46px; height:46px; object-fit:contain; background:#fff; border-radius:9px; padding:5px; box-shadow:0 2px 8px rgba(0,0,0,.18);}
+  .brand-name{font-size:14px; font-weight:700; color:#fff; line-height:1.5;}
+  .brand-name small{display:block; font-size:11.5px; font-weight:400; color:#C9D2E3;}
+  .flag-block{display:flex; align-items:center; gap:8px;}
+  .ksa-flag{width:46px; height:auto; border-radius:4px; box-shadow:0 0 0 1px rgba(255,255,255,.25), 0 2px 8px rgba(0,0,0,.18);}
+  .flag-label{font-size:11.5px; color:#C9D2E3; text-align:left;}
+  .eyebrow{font-size:13px; letter-spacing:.06em; color:#C9D2E3; font-weight:500; position:relative; z-index:1;}
+  h1{font-size:28px; font-weight:800; margin:6px 0 4px; position:relative; z-index:1;}
+  .subtitle{font-size:14.5px; color:#D7DDE9; max-width:640px; line-height:1.7; position:relative; z-index:1;}
+
+  .wrap{max-width:1280px; margin:0 auto; padding:0 24px;}
+
+  .kpis{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:14px;
+    margin-top:-28px; position:relative; z-index:2;
+  }
+  .kpi{
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px; box-shadow:0 6px 18px rgba(27,42,74,.08);
+    border-top:4px solid var(--navy);
+  }
+  .kpi.high{border-top-color:var(--high);}
+  .kpi.med{border-top-color:var(--med);}
+  .kpi.low{border-top-color:var(--low);}
+  .kpi .num{font-size:30px; font-weight:800; color:var(--navy);}
+  .kpi.high .num{color:var(--high);} .kpi.med .num{color:var(--med);} .kpi.low .num{color:var(--low);}
+  .kpi .lbl{font-size:13px; color:var(--muted); margin-top:2px;}
+
+  .charts{display:grid; grid-template-columns:1fr 1.3fr 1.3fr; gap:16px; margin-top:22px;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px 18px;}
+  .panel h3{font-size:14px; margin:0 0 10px; color:var(--navy); font-weight:700;}
+  .panel .hint{font-size:11.5px; color:var(--muted); margin-top:6px;}
+  .chart-box{position:relative; height:190px;}
+
+  .controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:14px 16px; margin-top:20px;
+  }
+  .search{flex:1; min-width:180px; position:relative;}
+  .search input{
+    width:100%; padding:9px 14px; border:1px solid var(--border); border-radius:8px;
+    font-family:inherit; font-size:14px; background:#FBFAF8;
+  }
+  .search input:focus{outline:2px solid var(--gold); outline-offset:1px;}
+  select{
+    padding:9px 12px; border:1px solid var(--border); border-radius:8px;
+    font-family:inherit; font-size:13.5px; background:#FBFAF8; color:var(--text);
+  }
+  .chip-group{display:flex; gap:6px; flex-wrap:wrap;}
+  .chip{
+    padding:7px 14px; border-radius:999px; border:1px solid var(--border);
+    background:#FBFAF8; font-size:13px; cursor:pointer; font-family:inherit;
+    transition:.15s; color:var(--text); font-weight:500;
+  }
+  .chip:hover{border-color:var(--gold);}
+  .chip.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .chip.active.p-high{background:var(--high); border-color:var(--high);}
+  .chip.active.p-med{background:var(--med); border-color:var(--med);}
+  .chip.active.p-low{background:var(--low); border-color:var(--low);}
+  .reset-btn{
+    padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:#fff;
+    font-family:inherit; font-size:13px; cursor:pointer; color:var(--muted);
+  }
+  .reset-btn:hover{color:var(--navy); border-color:var(--navy);}
+
+  .content{display:grid; grid-template-columns:1fr 340px; gap:16px; margin-top:16px; margin-bottom:36px; align-items:start;}
+  .table-panel{background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .table-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 18px; border-bottom:1px solid var(--border);
+  }
+  .table-head h3{margin:0; font-size:14px; color:var(--navy); font-weight:700;}
+  .count-tag{font-size:12.5px; color:var(--muted);}
+  .table-scroll{max-height:560px; overflow-y:auto;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  thead th{
+    position:sticky; top:0; background:#F1EFE9; color:var(--navy); z-index:1;
+    text-align:right; padding:10px 14px; font-weight:700; font-size:12.5px;
+    border-bottom:1px solid var(--border); cursor:pointer; user-select:none;
+  }
+  thead th:hover{background:#EAE6DC;}
+  thead th .arrow{opacity:.4; font-size:10px; margin-left:4px;}
+  tbody tr{border-bottom:1px solid #EFEDE7; cursor:pointer; transition:.1s;}
+  tbody tr:hover{background:#F8F6F1;}
+  tbody tr.selected{background:#EEF1F7;}
+  td{padding:9px 14px; vertical-align:middle;}
+  td.country{font-weight:700; color:var(--navy);}
+  .flag-img{width:20px; height:14px; object-fit:cover; border-radius:2px; box-shadow:0 0 0 1px rgba(0,0,0,.12); vertical-align:middle; margin-left:6px; background:#eee;}
+  .detail-panel h2 .flag-img{width:30px; height:21px; margin-left:8px;}
+  .badge{
+    display:inline-block; padding:3px 10px; border-radius:999px; font-size:12px; font-weight:700;
+  }
+  .badge.high{background:var(--high-bg); color:var(--high);}
+  .badge.med{background:var(--med-bg); color:var(--med);}
+  .badge.low{background:var(--low-bg); color:var(--low);}
+  .domain-pills{display:flex; flex-wrap:wrap; gap:4px; max-width:280px;}
+  .pill{
+    font-size:11px; padding:2px 8px; border-radius:6px; border:1px solid var(--border);
+    color:var(--muted); white-space:nowrap;
+  }
+  .pill.high{border-color:var(--high); color:var(--high);}
+  .pill.med{border-color:var(--med); color:var(--med);}
+  .pill.none{color:#B8B4AA; font-style:italic;}
+
+  .detail-panel{
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    padding:20px; position:sticky; top:16px; min-height:300px;
+  }
+  .detail-panel .placeholder{color:var(--muted); font-size:13.5px; text-align:center; padding:40px 10px; line-height:1.8;}
+  .detail-panel h2{margin:0 0 2px; font-size:19px; color:var(--navy);}
+  .detail-panel .d-continent{font-size:13px; color:var(--muted); margin-bottom:14px;}
+  .detail-panel .section-lbl{font-size:12px; font-weight:700; color:var(--navy); margin:16px 0 8px; text-transform:uppercase; letter-spacing:.03em;}
+  .detail-panel .domain-row{display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px dashed var(--border); font-size:13px;}
+  .detail-panel .tools-text{font-size:13.5px; line-height:1.9; color:var(--text); background:#FBFAF8; border:1px solid var(--border); border-radius:8px; padding:12px;}
+
+  footer{max-width:1280px; margin:0 auto; padding:0 24px 40px; font-size:12px; color:var(--muted); line-height:1.9;}
+  footer b{color:var(--navy);}
+
+  @media (max-width:980px){
+    .charts{grid-template-columns:1fr;}
+    .content{grid-template-columns:1fr;}
+    .kpis{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="header-top">
+      <div class="brand">
+        <img class="moe-logo" src="https://www.moe.gov.sa/_layouts/15/Portal/favicon/apple-icon-180x180.png" alt="شعار وزارة التعليم" onerror="this.style.display='none'">
+        <div class="brand-name">وزارة التعليم<small>المملكة العربية السعودية</small></div>
+      </div>
+      <div class="flag-block">
+        <span class="flag-label">المملكة العربية<br>السعودية</span>
+        <img class="ksa-flag" src="https://flagcdn.com/w160/sa.png" alt="علم المملكة العربية السعودية">
+      </div>
+    </div>
+    <div class="eyebrow">وزارة التعليم &nbsp;|&nbsp; وكالة التعاون الدولي</div>
+    <h1>لوحة التصنيف الاستراتيجي للدول</h1>
+    <div class="subtitle">تصنيف تفاعلي لـ85 دولة حسب الأولوية الاستراتيجية الشاملة، القارة، ومجالات التعاون التعليمي الستة ذات الأولوية — مستخرج من عرض «Global Engagement Zoning».</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><div class="num">85</div><div class="lbl">إجمالي الدول المصنّفة</div></div>
+    <div class="kpi high"><div class="num">26</div><div class="lbl">أولوية عالية</div></div>
+    <div class="kpi med"><div class="num">33</div><div class="lbl">أولوية متوسطة</div></div>
+    <div class="kpi low"><div class="num">26</div><div class="lbl">أولوية منخفضة</div></div>
+  </div>
+
+  <div class="charts">
+    <div class="panel">
+      <h3>توزيع الأولوية العامة</h3>
+      <div class="chart-box"><canvas id="priorityChart"></canvas></div>
+      <div class="hint">انقر على قطاع لتصفية الجدول</div>
+    </div>
+    <div class="panel">
+      <h3>عدد الدول حسب القارة</h3>
+      <div class="chart-box"><canvas id="continentChart"></canvas></div>
+      <div class="hint">انقر على عمود لتصفية الجدول</div>
+    </div>
+    <div class="panel">
+      <h3>عدد الدول المؤهلة في كل مجال تعاون</h3>
+      <div class="chart-box"><canvas id="domainChart"></canvas></div>
+      <div class="hint">انقر على عمود لتصفية الجدول</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search"><input id="searchInput" type="text" placeholder="ابحث باسم الدولة..."></div>
+    <div class="chip-group" id="priorityChips">
+      <button class="chip active" data-priority="">كل الأولويات</button>
+      <button class="chip p-high" data-priority="عالية">عالية</button>
+      <button class="chip p-med" data-priority="متوسطة">متوسطة</button>
+      <button class="chip p-low" data-priority="منخفضة">منخفضة</button>
+    </div>
+    <select id="continentSelect"><option value="">كل القارات</option></select>
+    <select id="domainSelect"><option value="">كل المجالات</option></select>
+    <button class="reset-btn" id="resetBtn">إعادة تعيين الفلاتر</button>
+  </div>
+
+  <div class="content">
+    <div class="table-panel">
+      <div class="table-head">
+        <h3>قائمة الدول</h3>
+        <span class="count-tag" id="countTag">عرض 85 من 85 دولة</span>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="country">الدولة <span class="arrow">↕</span></th>
+              <th data-sort="continent">القارة <span class="arrow">↕</span></th>
+              <th data-sort="priority">الأولوية <span class="arrow">↕</span></th>
+              <th>مجالات التعاون المؤهلة</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="detail-panel" id="detailPanel">
+      <div class="placeholder">انقر على أي دولة في الجدول<br>لعرض تفاصيلها الكاملة:<br>المجالات المؤهلة وآليات التعاون المقترحة.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>ملاحظات منهجية:</b> عمودا الدولة والأولوية العامة مأخوذان مباشرة من تصنيف العرض للدول حسب القيمة الاستراتيجية الشاملة (الصفحات 24–25).
+  مجالات التعاون ودرجة الملاءمة في كل مجال مأخوذة مباشرة من تصنيف العرض عبر المجالات الستة ذات الأولوية (الصفحات 26–28).
+  تصنيف القارة إضافة جغرافية عامة لتسهيل الفرز، وليس واردًا في العرض الأصلي.
+  «آليات التعاون المقترحة» الظاهرة في لوحة التفاصيل هي اقتراح تحليلي مشتق من مستوى أولوية الدولة وعدد مجالاتها ذات الملاءمة العالية، ويحتاج إلى مراجعة واعتماد رسمي من الإدارة المختصة قبل استخدامه.
+</footer>
+
+<script>
+const COUNTRIES = [{"country": "آيسلندا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇮🇸", "iso2": "IS"}, {"country": "أستراليا", "continent": "أوقيانوسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇦🇺", "iso2": "AU"}, {"country": "ألمانيا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇩🇪", "iso2": "DE"}, {"country": "أيرلندا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇮🇪", "iso2": "IE"}, {"country": "إسبانيا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇪🇸", "iso2": "ES"}, {"country": "إيطاليا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇮🇹", "iso2": "IT"}, {"country": "الإمارات العربية المتحدة", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇦🇪", "iso2": "AE"}, {"country": "البرتغال", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇵🇹", "iso2": "PT"}, {"country": "الدنمارك", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇩🇰", "iso2": "DK"}, {"country": "السويد", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇸🇪", "iso2": "SE"}, {"country": "الصين", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇨🇳", "iso2": "CN"}, {"country": "المملكة المتحدة", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇬🇧", "iso2": "GB"}, {"country": "النرويج", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇳🇴", "iso2": "NO"}, {"country": "النمسا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇦🇹", "iso2": "AT"}, {"country": "الولايات المتحدة الأمريكية", "continent": "أمريكا الشمالية", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇺🇸", "iso2": "US"}, {"country": "اليابان", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇯🇵", "iso2": "JP"}, {"country": "بلجيكا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇧🇪", "iso2": "BE"}, {"country": "جمهورية التشيك", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇨🇿", "iso2": "CZ"}, {"country": "سنغافورة", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇸🇬", "iso2": "SG"}, {"country": "سويسرا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇨🇭", "iso2": "CH"}, {"country": "فرنسا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇫🇷", "iso2": "FR"}, {"country": "فنلندا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇫🇮", "iso2": "FI"}, {"country": "قطر", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇶🇦", "iso2": "QA"}, {"country": "كندا", "continent": "أمريكا الشمالية", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇨🇦", "iso2": "CA"}, {"country": "كوريا الجنوبية", "continent": "آسيا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇰🇷", "iso2": "KR"}, {"country": "هولندا", "continent": "أوروبا", "priority": "عالية", "domains": [{"name": "تنقل المواهب والتبادل", "level": "عالية"}, {"name": "البحث والابتكار", "level": "عالية"}, {"name": "تنمية المهارات والقوى العاملة", "level": "عالية"}, {"name": "نظم التعليم والجودة", "level": "عالية"}], "tools": "شراكة استراتيجية شاملة: مجلس أو لجنة مشتركة دائمة، اتفاقيات ومذكرات تفاهم متعددة، برامج تنفيذية نشطة، وزيارات ثنائية دورية على مستوى القيادة.", "flag": "🇳🇱", "iso2": "NL"}, {"country": "أوكرانيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇺🇦", "iso2": "UA"}, {"country": "إستونيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇪🇪", "iso2": "EE"}, {"country": "إندونيسيا", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇮🇩", "iso2": "ID"}, {"country": "الأرجنتين", "continent": "أمريكا الجنوبية", "priority": "متوسطة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇦🇷", "iso2": "AR"}, {"country": "الأردن", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇯🇴", "iso2": "JO"}, {"country": "البحرين", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇧🇭", "iso2": "BH"}, {"country": "البرازيل", "continent": "أمريكا الجنوبية", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇧🇷", "iso2": "BR"}, {"country": "البوسنة والهرسك", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇧🇦", "iso2": "BA"}, {"country": "الكويت", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇰🇼", "iso2": "KW"}, {"country": "المجر", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇭🇺", "iso2": "HU"}, {"country": "المغرب", "continent": "أفريقيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇲🇦", "iso2": "MA"}, {"country": "الهند", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇮🇳", "iso2": "IN"}, {"country": "اليونان", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇬🇷", "iso2": "GR"}, {"country": "بلغاريا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇧🇬", "iso2": "BG"}, {"country": "بنغلاديش", "continent": "آسيا", "priority": "متوسطة", "domains": [], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇧🇩", "iso2": "BD"}, {"country": "بولندا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇵🇱", "iso2": "PL"}, {"country": "تايلاند", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇹🇭", "iso2": "TH"}, {"country": "تركمانستان", "continent": "آسيا", "priority": "متوسطة", "domains": [], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇹🇲", "iso2": "TM"}, {"country": "تركيا", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇹🇷", "iso2": "TR"}, {"country": "جنوب أفريقيا", "continent": "أفريقيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇿🇦", "iso2": "ZA"}, {"country": "روسيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇷🇺", "iso2": "RU"}, {"country": "سلوفينيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇸🇮", "iso2": "SI"}, {"country": "عُمان", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇴🇲", "iso2": "OM"}, {"country": "فيتنام", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇻🇳", "iso2": "VN"}, {"country": "قبرص", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇨🇾", "iso2": "CY"}, {"country": "قيرغيزستان", "continent": "آسيا", "priority": "متوسطة", "domains": [], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇰🇬", "iso2": "KG"}, {"country": "كازاخستان", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇰🇿", "iso2": "KZ"}, {"country": "لاتفيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇱🇻", "iso2": "LV"}, {"country": "لوكسمبورغ", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇱🇺", "iso2": "LU"}, {"country": "ليتوانيا", "continent": "أوروبا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇱🇹", "iso2": "LT"}, {"country": "ماليزيا", "continent": "آسيا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇲🇾", "iso2": "MY"}, {"country": "مصر", "continent": "أفريقيا", "priority": "متوسطة", "domains": [{"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "متوسطة"}], "tools": "مبادرة أو برنامج تعاون مركّز في مجال واحد، مع متابعة عبر زيارات أو اجتماعات دورية.", "flag": "🇪🇬", "iso2": "EG"}, {"country": "نيوزيلندا", "continent": "أوقيانوسيا", "priority": "متوسطة", "domains": [{"name": "تنقل المواهب والتبادل", "level": "متوسطة"}, {"name": "البحث والابتكار", "level": "متوسطة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "متوسطة"}, {"name": "نظم التعليم والجودة", "level": "متوسطة"}], "tools": "مذكرة تفاهم أو برنامج تنفيذي محدد النطاق، مجموعة عمل فنية، ومشاركة في فعاليات أو منصات دولية مشتركة.", "flag": "🇳🇿", "iso2": "NZ"}, {"country": "أذربيجان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇦🇿", "iso2": "AZ"}, {"country": "أفغانستان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇦🇫", "iso2": "AF"}, {"country": "أوزبكستان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇺🇿", "iso2": "UZ"}, {"country": "إثيوبيا", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇪🇹", "iso2": "ET"}, {"country": "الجزائر", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇩🇿", "iso2": "DZ"}, {"country": "السنغال", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇸🇳", "iso2": "SN"}, {"country": "السودان", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇸🇩", "iso2": "SD"}, {"country": "العراق", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇮🇶", "iso2": "IQ"}, {"country": "الفلبين", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "البحث والابتكار", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇵🇭", "iso2": "PH"}, {"country": "النيجر", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇳🇪", "iso2": "NE"}, {"country": "اليمن", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇾🇪", "iso2": "YE"}, {"country": "باكستان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇵🇰", "iso2": "PK"}, {"country": "بروناي", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇧🇳", "iso2": "BN"}, {"country": "بيلاروسيا", "continent": "أوروبا", "priority": "منخفضة", "domains": [{"name": "تنمية المهارات والقوى العاملة", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇧🇾", "iso2": "BY"}, {"country": "تونس", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇹🇳", "iso2": "TN"}, {"country": "جورجيا", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "البحث والابتكار", "level": "منخفضة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇬🇪", "iso2": "GE"}, {"country": "زامبيا", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇿🇲", "iso2": "ZM"}, {"country": "سريلانكا", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعليم العابر للحدود والمؤسسات التعليمية", "level": "منخفضة"}, {"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇱🇰", "iso2": "LK"}, {"country": "سوريا", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇸🇾", "iso2": "SY"}, {"country": "طاجيكستان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇹🇯", "iso2": "TJ"}, {"country": "فنزويلا", "continent": "أمريكا الجنوبية", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇻🇪", "iso2": "VE"}, {"country": "كينيا", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇰🇪", "iso2": "KE"}, {"country": "لبنان", "continent": "آسيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇱🇧", "iso2": "LB"}, {"country": "مالطا", "continent": "أوروبا", "priority": "منخفضة", "domains": [{"name": "البحث والابتكار", "level": "منخفضة"}, {"name": "تنمية المهارات والقوى العاملة", "level": "منخفضة"}], "tools": "متابعة واستكشاف: تواصل أولي واستطلاعي دون التزام مؤسسي حاليًا.", "flag": "🇲🇹", "iso2": "MT"}, {"country": "موريتانيا", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇲🇷", "iso2": "MR"}, {"country": "موزمبيق", "continent": "أفريقيا", "priority": "منخفضة", "domains": [{"name": "التعاون التنموي والدبلوماسية التعليمية", "level": "منخفضة"}], "tools": "قناة تعاون تنموي وإنساني: منح ومساعدات تعليمية وبناء قدرات، دون حاجة لأدوات مؤسسية موسعة حاليًا.", "flag": "🇲🇿", "iso2": "MZ"}];
+const DOMAIN_NAMES = ["تنقل المواهب والتبادل", "التعليم العابر للحدود والمؤسسات التعليمية", "البحث والابتكار", "تنمية المهارات والقوى العاملة", "نظم التعليم والجودة", "التعاون التنموي والدبلوماسية التعليمية"];
+const PRIORITY_ORDER = {"عالية":0, "متوسطة":1, "منخفضة":2};
+const PRIORITY_CLASS = {"عالية":"high", "متوسطة":"med", "منخفضة":"low"};
+
+let state = { search:"", priority:"", continent:"", domain:"", sortKey:null, sortDir:1, selected:null };
+
+function flagImg(c, w, h){
+  if(!c.iso2) return '';
+  const code = c.iso2.toLowerCase();
+  return `<img class="flag-img" style="width:${w}px;height:${h}px" src="https://flagcdn.com/w40/${code}.png" srcset="https://flagcdn.com/w80/${code}.png 2x" alt="${c.country}" loading="lazy">`;
+}
+
+// populate continent / domain selects
+const continents = [...new Set(COUNTRIES.map(c=>c.continent))];
+const contSel = document.getElementById('continentSelect');
+continents.forEach(c=>{ const o=document.createElement('option'); o.value=c; o.textContent=c; contSel.appendChild(o); });
+const domSel = document.getElementById('domainSelect');
+DOMAIN_NAMES.forEach(d=>{ const o=document.createElement('option'); o.value=d; o.textContent=d; domSel.appendChild(o); });
+
+function filteredRows(){
+  return COUNTRIES.filter(c=>{
+    if(state.search && !c.country.includes(state.search)) return false;
+    if(state.priority && c.priority !== state.priority) return false;
+    if(state.continent && c.continent !== state.continent) return false;
+    if(state.domain && !c.domains.some(d=>d.name===state.domain)) return false;
+    return true;
+  });
+}
+
+function renderTable(){
+  let rows = filteredRows();
+  if(state.sortKey){
+    rows = [...rows].sort((a,b)=>{
+      let av = state.sortKey==='priority' ? PRIORITY_ORDER[a.priority] : a[state.sortKey];
+      let bv = state.sortKey==='priority' ? PRIORITY_ORDER[b.priority] : b[state.sortKey];
+      if(av<bv) return -1*state.sortDir; if(av>bv) return 1*state.sortDir; return 0;
+    });
+  }
+  const body = document.getElementById('tableBody');
+  body.innerHTML = rows.map(c=>{
+    const pillsHtml = DOMAIN_NAMES.map(dn=>{
+      const hit = c.domains.find(d=>d.name===dn);
+      if(!hit) return '';
+      const cls = hit.level==='عالية' ? 'high' : (hit.level==='متوسطة' ? 'med' : '');
+      if(!cls) return '';
+      const short = dn.split(' ').slice(0,2).join(' ');
+      return `<span class="pill ${cls}" title="${dn} — ${hit.level}">${short}</span>`;
+    }).join('');
+    return `<tr data-country="${c.country}" class="${state.selected===c.country?'selected':''}">
+      <td class="country">${flagImg(c,20,14)} ${c.country}</td>
+      <td>${c.continent}</td>
+      <td><span class="badge ${PRIORITY_CLASS[c.priority]}">${c.priority}</span></td>
+      <td><div class="domain-pills">${pillsHtml || '<span class="pill none">لا يوجد</span>'}</div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('countTag').textContent = `عرض ${rows.length} من 85 دولة`;
+
+  body.querySelectorAll('tr').forEach(tr=>{
+    tr.addEventListener('click', ()=>{ state.selected = tr.dataset.country; renderTable(); renderDetail(); });
+  });
+}
+
+function renderDetail(){
+  const panel = document.getElementById('detailPanel');
+  const c = COUNTRIES.find(x=>x.country===state.selected);
+  if(!c){ panel.innerHTML = '<div class="placeholder">انقر على أي دولة في الجدول<br>لعرض تفاصيلها الكاملة:<br>المجالات المؤهلة وآليات التعاون المقترحة.</div>'; return; }
+  const domainsHtml = DOMAIN_NAMES.map(dn=>{
+    const hit = c.domains.find(d=>d.name===dn);
+    const cls = hit ? (hit.level==='عالية'?'high':(hit.level==='متوسطة'?'med':'low')) : '';
+    const label = hit ? hit.level : 'غير مؤهلة';
+    return `<div class="domain-row"><span>${dn}</span><span class="badge ${cls||''}" style="${hit?'':'background:#F1EFE9;color:#B8B4AA;'}">${label}</span></div>`;
+  }).join('');
+  panel.innerHTML = `
+    <h2>${flagImg(c,30,21)} ${c.country}</h2>
+    <div class="d-continent">${c.continent} &nbsp;·&nbsp; <span class="badge ${PRIORITY_CLASS[c.priority]}">أولوية ${c.priority}</span></div>
+    <div class="section-lbl">الملاءمة عبر مجالات التعاون الستة</div>
+    ${domainsHtml}
+    <div class="section-lbl">آليات التعاون المقترحة</div>
+    <div class="tools-text">${c.tools}</div>
+  `;
+}
+
+// controls
+document.getElementById('searchInput').addEventListener('input', e=>{ state.search=e.target.value.trim(); renderTable(); });
+document.querySelectorAll('#priorityChips .chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    state.priority = chip.dataset.priority;
+    document.querySelectorAll('#priorityChips .chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    renderTable(); syncCharts();
+  });
+});
+contSel.addEventListener('change', e=>{ state.continent=e.target.value; renderTable(); syncCharts(); });
+domSel.addEventListener('change', e=>{ state.domain=e.target.value; renderTable(); syncCharts(); });
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  state = { search:"", priority:"", continent:"", domain:"", sortKey:null, sortDir:1, selected:state.selected };
+  document.getElementById('searchInput').value='';
+  contSel.value=''; domSel.value='';
+  document.querySelectorAll('#priorityChips .chip').forEach(c=>c.classList.remove('active'));
+  document.querySelector('#priorityChips .chip[data-priority=""]').classList.add('active');
+  renderTable(); syncCharts();
+});
+document.querySelectorAll('thead th[data-sort]').forEach(th=>{
+  th.addEventListener('click', ()=>{
+    const key = th.dataset.sort;
+    if(state.sortKey===key) state.sortDir *= -1; else { state.sortKey=key; state.sortDir=1; }
+    renderTable();
+  });
+});
+
+function syncCharts(){
+  priorityChart.data.datasets[0].backgroundColor = ['#1B6B3A','#9C7A3C','#8A3A3A'].map((c,i)=>{
+    const keys=['عالية','متوسطة','منخفضة'];
+    return (!state.priority || state.priority===keys[i]) ? c : c+'33';
+  });
+  priorityChart.update();
+  continentChart.data.datasets[0].backgroundColor = continentChart.data.labels.map(l=>
+    (!state.continent || state.continent===l) ? '#1B2A4A' : '#1B2A4A33');
+  continentChart.update();
+  domainChart.data.datasets[0].backgroundColor = domainChart.data.labels.map(l=>
+    (!state.domain || state.domain===l) ? '#2E7D6B' : '#2E7D6B33');
+  domainChart.update();
+}
+
+// ---- Charts ----
+Chart.defaults.font.family = "'Tajawal', sans-serif";
+Chart.defaults.color = '#6B7280';
+
+const priorityChart = new Chart(document.getElementById('priorityChart'), {
+  type:'doughnut',
+  data:{ labels:['عالية','متوسطة','منخفضة'],
+    datasets:[{ data:[26,33,26], backgroundColor:['#1B6B3A','#9C7A3C','#8A3A3A'], borderWidth:0 }] },
+  options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+    plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, padding:12, font:{size:11} } } },
+    onClick:(evt, els)=>{
+      if(!els.length) return;
+      const idx = els[0].index; const keys=['عالية','متوسطة','منخفضة'];
+      const val = keys[idx];
+      state.priority = state.priority===val ? '' : val;
+      document.querySelectorAll('#priorityChips .chip').forEach(c=>{
+        c.classList.toggle('active', c.dataset.priority===state.priority || (!state.priority && c.dataset.priority===''));
+      });
+      renderTable(); syncCharts();
+    }
+  }
+});
+
+const continentChart = new Chart(document.getElementById('continentChart'), {
+  type:'bar',
+  data:{ labels:["آسيا", "أوروبا", "أفريقيا", "أمريكا الشمالية", "أمريكا الجنوبية", "أوقيانوسيا"],
+    datasets:[{ data:[34, 31, 13, 2, 3, 2], backgroundColor:'#1B2A4A', borderRadius:5, maxBarThickness:28 }] },
+  options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{ legend:{ display:false } },
+    scales:{ x:{ ticks:{font:{size:11}}, grid:{color:'#EEECE6'} }, y:{ ticks:{font:{size:11.5}}, grid:{display:false} } },
+    onClick:(evt, els)=>{
+      if(!els.length) return;
+      const idx = els[0].index; const val = continentChart.data.labels[idx];
+      state.continent = state.continent===val ? '' : val;
+      contSel.value = state.continent;
+      renderTable(); syncCharts();
+    }
+  }
+});
+
+const domainChart = new Chart(document.getElementById('domainChart'), {
+  type:'bar',
+  data:{ labels:["تنقل المواهب والتبادل", "التعليم العابر للحدود والمؤسسات التعليمية", "البحث والابتكار", "تنمية المهارات والقوى العاملة", "نظم التعليم والجودة", "التعاون التنموي والدبلوماسية التعليمية"],
+    datasets:[{ data:[33, 21, 54, 51, 36, 25], backgroundColor:'#2E7D6B', borderRadius:5, maxBarThickness:22 }] },
+  options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins:{ legend:{ display:false },
+      tooltip:{ callbacks:{ title: (items)=> items[0].label } } },
+    scales:{ x:{ ticks:{font:{size:11}}, grid:{color:'#EEECE6'} },
+             y:{ ticks:{font:{size:10}, callback:function(v){ const l=this.getLabelForValue(v); return l.length>16? l.slice(0,16)+'…': l; } }, grid:{display:false} } },
+    onClick:(evt, els)=>{
+      if(!els.length) return;
+      const idx = els[0].index; const val = domainChart.data.labels[idx];
+      state.domain = state.domain===val ? '' : val;
+      domSel.value = state.domain;
+      renderTable(); syncCharts();
+    }
+  }
+});
+
+renderTable();
+renderDetail();
+</script>
+</body>
+</html>
